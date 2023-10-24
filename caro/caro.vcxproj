@@ -130,6 +130,7 @@
     <ClCompile Include="caro.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Allmenu.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
