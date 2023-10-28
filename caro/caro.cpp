@@ -10,5 +10,3 @@ void main() {
 	Menu();
 	_getch();
 }
-// them 1 dong
-//lai them 1 dong

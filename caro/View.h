@@ -132,6 +132,14 @@ int CheckBoard(int pX, int pY) {
 	return 0;
 }
 
+
+void StartGame() {
+	system("cls");
+
+	ResetData(); // Khởi tạo dữ liệu gốc
+	DrawBoard(BOARD_SIZE, TOP, LEFT); // Vẽ màn hình
+}
+
 int CheckTick(int pX, int pY) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {

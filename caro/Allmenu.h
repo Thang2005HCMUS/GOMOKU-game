@@ -43,7 +43,5 @@ void About() {
 
 void Exit() {
 	GotoXY(50, 20);
-	
+
 }
-
-
