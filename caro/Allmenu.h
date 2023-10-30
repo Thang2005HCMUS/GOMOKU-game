@@ -4,6 +4,8 @@
 #include"View.h"
 #include<conio.h>
 #include<Windows.h>
+#include<string>
+#include<fstream>
 
 using namespace std;
 
@@ -18,6 +20,7 @@ void Help() {
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) break;
 	}
+	system("cls");
 }
 
 void About() {
@@ -39,9 +42,8 @@ void About() {
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) break;
 	}
+	system("cls");
 }
 
-void Exit() {
-	GotoXY(50, 20);
 
-}
+
