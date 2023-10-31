@@ -320,23 +320,23 @@ void Menu() {
 	int counter = 1;
 	while (1) {
 
-		GotoXY(60, 18);
+		GotoXY(55, 18);
 		SetColor(15, set[0]);
 		cout << "1.New game";
 
-		GotoXY(60, 19);
+		GotoXY(55, 19);
 		SetColor(15, set[1]);
 		cout << "2.Help";
 
-		GotoXY(60, 20);
+		GotoXY(55, 20);
 		SetColor(15, set[2]);
 		cout << "3.Load game";
 
-		GotoXY(60, 21);
+		GotoXY(55, 21);
 		SetColor(15, set[3]);
 		cout << "4.About";
 
-		GotoXY(60, 22);
+		GotoXY(55, 22);
 		SetColor(15, set[4]);
 		cout << "5.Exit";
 

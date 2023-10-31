@@ -27,7 +27,7 @@ void About() {
 	GotoXY(10, 5);
 	cout << "GROUP 10";
 	GotoXY(10, 6);
-	cout << "MENBER:";
+	cout << "MEMBER:";
 	GotoXY(10, 7);
 	cout << "1.Vu Nguyen Trung Hieu";
 	GotoXY(10, 8);
