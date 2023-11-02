@@ -331,3 +331,196 @@ int testBoard(int pX, int pY, int _size)
 
 	return 2;
 }
+
+
+void menu_display() {
+	// C (black)
+	HighLight(35, 4, 2, 1, 0);
+	HighLight(35, 9, 2, 1, 0);
+	HighLight(42, 9, 2, 1, 0);
+	HighLight(42, 4, 2, 1, 0);
+	for (int i = 0; i <= 5; i++)
+	{
+		HighLight(36 + i, 3, 2, 1, 0);
+	}
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(34, 5 + i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 5; i++)
+	{
+		HighLight(36 + i, 10, 2, 1, 0);
+	}
+	//chu C ( blue)
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(33, 5 + i, 1, 1, 11);
+	}
+
+	HighLight(34, 4, 1, 1, 11);
+	HighLight(36, 3, 1, 1, 11);
+	HighLight(34, 9, 1, 1, 11);
+	HighLight(35, 10, 1, 1, 11);
+	HighLight(41, 4, 1, 1, 11);
+	HighLight(41, 9, 1, 1, 11);
+	// chu C ( red)
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(36, 5 + i, 1, 1, 4);
+	}
+	HighLight(37, 4, 1, 1, 4);
+	HighLight(37, 9, 1, 1, 4);
+	HighLight(44, 4, 1, 1, 4);
+	HighLight(43, 3, 1, 1, 4);
+	HighLight(44, 9, 1, 1, 4);
+	HighLight(43, 10, 1, 1, 4);
+	// A (black)
+	for (int i = 0; i <= 5; i++) {
+
+		HighLight(50, 10 - i, 2, 1, 0);
+	}
+	HighLight(51, 4, 2, 1, 0);
+	for (int i = 0; i <= 4; i++) {
+
+		HighLight(52 + i, 3, 2, 1, 0);
+	}
+	HighLight(57, 4, 2, 1, 0);
+	for (int i = 0; i <= 5; i++) {
+
+		HighLight(58, 10 - i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 4; i++) {
+
+		HighLight(52 + i, 7, 2, 1, 0);
+	}
+	// chu A (blue)
+	for (int i = 0; i <= 5; i++)
+	{
+		HighLight(49, 5 + i, 1, 1, 11);
+	}
+	for (int i = 0; i <= 5; i++)
+	{
+		if (i == 2) {
+			continue;
+		}
+		HighLight(57, 5 + i, 1, 1, 11);
+	}
+	HighLight(56, 4, 1, 1, 11);
+	HighLight(50, 4, 1, 1, 11);
+	HighLight(51, 3, 1, 1, 11);
+	//chu A( red) 
+	for (int i = 0; i <= 5; i++)
+	{
+		HighLight(60, 5 + i, 1, 1, 4);
+	}
+	for (int i = 0; i <= 5; i++)
+	{
+		if (i == 2) {
+			continue;
+		}
+		HighLight(52, 5 + i, 1, 1, 4);
+	}
+	HighLight(59, 4, 1, 1, 4);
+	HighLight(53, 4, 1, 1, 4);
+	HighLight(58, 3, 1, 1, 4);
+	// R (black)
+	for (int i = 0; i <= 7; i++) {
+
+		HighLight(66, 10 - i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 6; i++) {
+
+		HighLight(66 + i, 3, 2, 1, 0);
+	}
+	HighLight(72, 4, 2, 1, 0);
+	HighLight(73, 4, 2, 1, 0);
+	HighLight(73, 5, 2, 1, 0);
+	HighLight(72, 6, 2, 1, 0);
+	HighLight(73, 9, 2, 1, 0);
+	HighLight(72, 8, 2, 1, 0);
+	for (int i = 0; i <= 5; i++) {
+
+		HighLight(66 + i, 7, 2, 1, 0);
+	}
+	HighLight(71, 8, 2, 1, 0);
+	HighLight(72, 9, 2, 1, 0);
+	HighLight(73, 10, 2, 1, 0);
+	// R(blue)
+	for (int i = 0; i <= 7; i++)
+	{
+		HighLight(65, 3 + i, 1, 1, 11);
+	}
+	HighLight(71, 4, 1, 1, 11);
+	HighLight(72, 5, 1, 1, 11);
+	HighLight(71, 6, 1, 1, 11);
+	HighLight(70, 8, 1, 1, 11);
+	HighLight(71, 9, 1, 1, 11);
+	HighLight(72, 10, 1, 1, 11);
+	// R(red)
+	for (int i = 0; i <= 6; i++)
+	{
+		if (i == 3) {
+			continue;
+		}
+		HighLight(68, 4 + i, 1, 1, 4);
+	}
+	HighLight(74, 3, 1, 1, 4);
+	HighLight(75, 4, 1, 1, 4);
+	HighLight(75, 5, 1, 1, 4);
+	HighLight(74, 6, 1, 1, 4);
+	HighLight(73, 7, 1, 1, 4);
+	HighLight(74, 8, 1, 1, 4);
+	HighLight(75, 9, 1, 1, 4);
+	HighLight(75, 10, 1, 1, 4);
+
+	//O (black)
+	for (int i = 0; i <= 3; i++) {
+
+		HighLight(80, 8 - i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 4; i++) {
+		HighLight(82 + i, 3, 2, 1, 0);
+	}
+	for (int i = 0; i <= 3; i++) {
+
+		HighLight(88, 8 - i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 4; i++) {
+		HighLight(82 + i, 10, 2, 1, 0);
+	}
+	HighLight(81, 9, 2, 1, 0);
+	HighLight(87, 9, 2, 1, 0);
+	HighLight(81, 4, 2, 1, 0);
+	HighLight(87, 4, 2, 1, 0);
+	// O (blue)
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(79, 5 + i, 1, 1, 11);
+	}
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(87, 5 + i, 1, 1, 11);
+	}
+	HighLight(86, 4, 1, 1, 11);
+	HighLight(86, 9, 1, 1, 11);
+	HighLight(80, 4, 1, 1, 11);
+	HighLight(80, 9, 1, 1, 11);
+	HighLight(81, 3, 1, 1, 11);
+	HighLight(81, 10, 1, 1, 11);
+	// 0 (red)
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(82, 5 + i, 1, 1, 4);
+	}
+	for (int i = 0; i <= 3; i++)
+	{
+		HighLight(90, 5 + i, 1, 1, 4);
+	}
+	HighLight(83, 4, 1, 1, 4);
+	HighLight(83, 9, 1, 1, 4);
+	HighLight(89, 4, 1, 1, 4);
+	HighLight(89, 9, 1, 1, 4);
+	HighLight(88, 3, 1, 1, 4);
+	HighLight(88, 10, 1, 1, 4);
+
+}

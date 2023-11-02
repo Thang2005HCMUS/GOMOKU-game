@@ -67,6 +67,7 @@ void PlayPVP() {
 			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		}
 		else if (_COMMAND == 27) {
+			system("cls");
 			break;
 		}
 		else if (_COMMAND == 13 or _COMMAND == 32) {
@@ -174,7 +175,7 @@ void PlayPVP() {
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
 			_COMMAND = toupper(_getch());
-			if (_COMMAND == 'Y') { StartGame(); PlayPVP(); }
+			if (_COMMAND == 'Y') { StartGame(); PlayPVP(); break; }
 			else {
 				break;
 
@@ -186,7 +187,7 @@ void PlayPVP() {
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
 			_COMMAND = toupper(_getch());
-			if (_COMMAND == 'Y') { StartGame(); PlayPVP(); }
+			if (_COMMAND == 'Y') { StartGame(); PlayPVP();  break; }
 			else {
 				break;
 			}
@@ -269,7 +270,7 @@ void LoadGame() {
 	GotoXY(50, 20);
 	cout << "Enter the file name: ";
 	cin >> name;
-	ifstream SaveName1("filename.txt",ios::in);
+	ifstream SaveName1("filename.txt");
 	string read1;
 	
 	while (getline(SaveName1, read1)) {
@@ -303,9 +304,7 @@ void LoadGame() {
 
 		}
 	}
-	
 	SaveName1.close();
-	_COMMAND = toupper(_getch());
 }
 
 
@@ -314,12 +313,12 @@ void Menu() {
 	system("cls");
 	Background();
 	HighLight(0, 0, 0, 0, 0);
-
+	
 	int set[] = { 4,0,0,0,0 };
 	char key;
 	int counter = 1;
 	while (1) {
-
+		menu_display();
 		GotoXY(60, 18);
 		SetColor(15, set[0]);
 		cout << "1.New game";
