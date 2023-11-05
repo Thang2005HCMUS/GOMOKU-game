@@ -23,7 +23,6 @@ void Save() {
 	SaveGame.close();
 }
 void Load() {
-	
 	ifstream LoadGame;
 	LoadGame.open(filename);
 	

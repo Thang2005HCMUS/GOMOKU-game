@@ -19,6 +19,34 @@ int _COMMAND;
 int _X;
 int _Y;
 string filename;
+string player1;
+string player2;
+
+
+
+void FixConsoleWindow() {
+	HWND consoleWindow = GetConsoleWindow();
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+	SetWindowLong(consoleWindow, GWL_STYLE, style);
+
+}
+
+void Nocursortype()
+{
+	CONSOLE_CURSOR_INFO Info;
+	Info.bVisible = FALSE;
+	Info.dwSize = 20;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
+}
+
+void UnNocursortype()
+{
+	CONSOLE_CURSOR_INFO Info;
+	Info.bVisible = TRUE;
+	Info.dwSize = 20;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
+}
 
 
 void GotoXY(int pX, int pY)
@@ -99,9 +127,38 @@ void DrawBoard(int _size, int _top, int _left) {
 		GotoXY(2, _top + 2 * _size);
 		for (int i = 2; i <= _left + 4 * _size - 1; i++) {
 			putchar(205);
-
 		}
+	}
+	GotoXY(_left + 4 * _size + 20, 10);
+	cout << "F1 : New Game";
+	GotoXY(_left + 4 * _size + 20, 12);
+	cout << "F2 : Save Game";
+	GotoXY(_left + 4 * _size + 40, 10);
+	cout << "F3 : Load Game";
+	GotoXY(_left + 4 * _size + 40, 12);
+	cout << "F4 : Undo Step";
+	GotoXY(_left + 4 * _size + 29, 14);
+	cout << "ESC: Return Menu!";
+	
 
+	GotoXY(_left + 4 * _size + 15, 2);
+	for (int i = _left + 4 * _size + 15; i <= _left + 4 * _size + 60; i++)
+	{
+		if (i == _left + 4 * _size + 15) putchar(201);
+		else if (i == _left + 4 * _size + 60) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 3; i <= 8; i++)
+	{
+		GotoXY(_left + 4 * _size + 15, i); putchar(186);
+		GotoXY(_left + 4 * _size + 60, i); putchar(186);
+	}
+	GotoXY(_left + 4 * _size + 15, 6);
+	for (int i = _left + 4 * _size + 15; i <= _left + 4 * _size + 60; i++)
+	{
+		if (i == _left + 4 * _size + 15) putchar(200);
+		else if (i == _left + 4 * _size + 60) putchar(188);
+		else putchar(205);
 	}
 }
 
@@ -151,6 +208,12 @@ int CheckTick(int pX, int pY) {
 	}
 }
 
+int Check(int i, int j) {
+	
+	return _A[i][j].c;
+
+}
+
 // thang thua hoa
 
 int testBoard(int pX, int pY, int _size)
@@ -186,7 +249,6 @@ int testBoard(int pX, int pY, int _size)
 			}
 		}
 	}
-
 	int res = 0;
 	int xStart = (x - 4 > 0) ? x - 4 : 0;
 	int yStart = (y - 4 > 0) ? y - 4 : 0;
@@ -332,6 +394,185 @@ int testBoard(int pX, int pY, int _size)
 	return 2;
 }
 
+void DrawLineWin(int pX, int pY)
+{
+	int x = 0;
+	int y = 0;
+
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			if (_A[i][j].x == pX && _A[i][j].y == pY)
+			{
+				x = i;
+				y = j;
+				break;
+			}
+		}
+	}
+	int res = 0;
+	int xStart = (x - 4 > 0) ? x - 4 : 0;
+	int yStart = (y - 4 > 0) ? y - 4 : 0;
+
+	int xEnd = (x + 4 >= BOARD_SIZE) ? BOARD_SIZE - 1 : x + 4;
+	int yEnd = (y + 4 >= BOARD_SIZE) ? BOARD_SIZE - 1 : y + 4;
+
+	int x1, x2, y1, y2;
+
+	for (int i = xStart; i <= x; i++)
+	{
+		if (i + 4 < BOARD_SIZE)
+		{
+			res = _A[i][y].c + _A[i + 1][y].c + _A[i + 2][y].c
+				+ _A[i + 3][y].c + _A[i + 4][y].c;
+
+			x1 = i - 1 >= 0 ? i - 1 : xStart;
+			y1 = y;
+
+			x2 = i + 5 >= BOARD_SIZE ? x + 4 : i + 5;
+			y2 = y;
+		}
+
+		if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
+		{
+			for (int j = 0; j < 5; j++) {
+				GotoXY(y * 4 + LEFT + 2, (i+j) * 2 + TOP + 1);
+				cout << "O";
+			}
+			return ;//1
+		}
+		if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
+		{
+			for (int j = 0; j < 5; j++) {
+				GotoXY(y * 4 + LEFT + 2, (i + j) * 2 + TOP + 1);
+				cout << "X";
+			}
+			return ;//-1
+		}
+	}
+
+	for (int i = yStart; i <= y; i++)
+	{
+		if (i + 4 < BOARD_SIZE)
+		{
+			res = _A[x][i].c + _A[x][i + 1].c + _A[x][i + 2].c
+				+ _A[x][i + 3].c + _A[x][i + 4].c;
+
+			x1 = x;
+			y1 = i - 1 >= 0 ? i - 1 : yStart;
+
+			x2 = x;
+			y2 = i + 5 >= BOARD_SIZE ? y + 4 : i + 5;
+		}
+
+		if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
+		{
+			for (int j = 0; j < 5; j++) {
+				GotoXY((i+j) * 4 + LEFT + 2, x * 2 + TOP + 1);
+				cout << "O";
+			}
+			return ;//1
+		}
+		if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
+		{
+
+			for (int j = 0; j < 5; j++) {
+				GotoXY((i + j) * 4 + LEFT + 2, x * 2 + TOP + 1);
+				cout << "X";
+			}
+			return ;//-1
+		}
+	}
+
+	for (int i = xStart; i <= x; i++)
+	{
+		for (int j = yStart; j <= y; j++)
+		{
+			if (i - j == x - y && i + 4 < BOARD_SIZE && j + 4 < BOARD_SIZE)
+			{
+				res = _A[i][j].c + _A[i + 1][j + 1].c + _A[i + 2][j + 2].c
+					+ _A[i + 3][j + 3].c + _A[i + 4][j + 4].c;
+				x1 = i - 1;
+				y1 = j - 1;
+				if (x1 < 0 || y1 < 0)
+				{
+					x1 = i;
+					y1 = j;
+				}
+				x2 = i + 5;
+				y2 = j + 5;
+				if (x2 >= BOARD_SIZE || y2 >= BOARD_SIZE)
+				{
+					y2 = j;
+					x2 = i;
+				}
+			}
+
+			if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
+			{
+
+				for (int h = 0; h < 5; h++) {
+					GotoXY((j+h) * 4 + LEFT + 2, (i+h) * 2 + TOP + 1);
+					cout << "O";
+				}
+				return ;//1
+			}
+			if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
+			{
+				for (int h = 0; h < 5; h++) {
+					GotoXY((j+h ) * 4 + LEFT + 2, (i+h ) * 2 + TOP + 1);
+					cout << "X";
+				}
+				return ;//-1
+			}
+		}
+	}
+
+	for (int i = xEnd; i >= x; i--)
+	{
+		for (int j = yStart; j <= y; j++)
+		{
+			if (i + j == x + y && j + 4 < BOARD_SIZE && i - 4 >= 0)
+			{
+				res = _A[i][j].c + _A[i - 1][j + 1].c + _A[i - 2][j + 2].c
+					+ _A[i - 3][j + 3].c + _A[i - 4][j + 4].c;
+				x1 = i + 1;
+				y1 = j - 1;
+				if (x1 >= BOARD_SIZE || y1 < 0)
+				{
+					x1 = i;
+					y1 = i;
+				}
+				x2 = i - 5;
+				y2 = j + 5;
+				if (x2<0 || y2>BOARD_SIZE)
+				{
+					x2 = i;
+					y2 = j;
+				}
+			}
+			if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
+			{
+				for (int h = 0; h < 5; h++) {
+					GotoXY((j + h) * 4 + LEFT + 2, (i - h) * 2 + TOP + 1);
+					cout << "O";
+				}
+				return ;//1
+			}
+			if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
+			{
+				for (int h = 0; h < 5; h++) {
+					GotoXY((j + h) * 4 + LEFT + 2, (i - h) * 2 + TOP + 1);
+					cout << "X";
+				}
+				return ;//-1
+			}
+		}
+	}
+
+	
+}
 
 void menu_display() {
 	// C (black)

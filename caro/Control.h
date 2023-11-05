@@ -6,11 +6,7 @@
 #include"Allmenu.h"
 #include<vector>
 #include"Model.h"
-
-
-
 using namespace std;
-
 void MoveRight() {
 	if (_X < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].x) {
 		_X += 4;
@@ -42,12 +38,11 @@ void MoveUp() {
 void PlayPVP() {
 	vector<int> mapx;
 	vector<int> mapy;
-
-	
+	UnNocursortype();
 	GotoXY(_X, _Y);
-
+	int x1 = 0;
+	int x2 = 0;
 	while (1) {
-
 		GotoXY(_X, _Y);
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 'A' or _COMMAND == 75) {
@@ -77,12 +72,18 @@ void PlayPVP() {
 				SetColor(15, 5);
 				cout << "X";
 				_TURN = false;
+				x1++;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 21);
+				cout << "Player1: " << player1 << "    " << x1 << " ";
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
 				break;
 			case 1:
 				SetColor(15, 2);
 				cout << "O";
+				x2++;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 23);
+				cout << "Player2: " << player2 << "    " << x1 << " ";
 				_TURN = true;
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
@@ -93,6 +94,9 @@ void PlayPVP() {
 		else if (_COMMAND == 62 && mapx.size() > 0 && mapy.size() > 0) {
 			switch (CheckTick(mapx[mapx.size() - 1], mapy[mapy.size() - 1])) {
 			case 1:
+				x2--;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 23);
+				cout << "Player2: " << player2 << "    " << x2 << " ";
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -112,6 +116,9 @@ void PlayPVP() {
 				}
 				break;
 			case -1:
+				x1--;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 21);
+				cout << "Player1: " << player1 << "    " << x1 << " ";
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -134,6 +141,11 @@ void PlayPVP() {
 				break;
 			}
 		}
+		else if (_COMMAND == 59) {
+			StartGame();
+			x1 = 0;
+			x2 = 0;
+		}
 		else if (_COMMAND == 60) {
 			Save();
 			SaveFileName();
@@ -146,7 +158,6 @@ void PlayPVP() {
 			cout << "Nhap cho dung ten gium tui!";
 			cin >> filename;
 			Load();
-
 			system("cls");
 			DrawBoard(BOARD_SIZE, TOP, LEFT);
 			for (int i = 0; i < BOARD_SIZE; i++) {
@@ -161,7 +172,6 @@ void PlayPVP() {
 					if (_A[i][j].c == 1) {
 						SetColor(15, 2);
 						cout << "O";
-
 					}
 					if (_A[i][j].c == 0) {
 						cout << " ";
@@ -169,23 +179,40 @@ void PlayPVP() {
 				}
 			}
 		}
-
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
+			
 			GotoXY(80, 15); cout << "O thang!";
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
+			while (1) {
+				if (_kbhit()) {
+					break;
+				}
+				SetColor(15, rand() % 15 + 1);
+				DrawLineWin(_X, _Y);
+				Sleep(100);
+				SetColor(15, 0);
+			}
 			_COMMAND = toupper(_getch());
 			if (_COMMAND == 'Y') { StartGame(); PlayPVP(); break; }
 			else {
 				break;
-
-			}
-
+			}	
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
 			GotoXY(80, 15); cout << "X thang!";
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
+			while (1) {
+				
+				if (_kbhit()) {
+					break;
+				}
+				SetColor(15, rand() % 15 + 1);
+				DrawLineWin(_X, _Y);
+				Sleep(100);
+				SetColor(15, 0);
+			}
 			_COMMAND = toupper(_getch());
 			if (_COMMAND == 'Y') { StartGame(); PlayPVP();  break; }
 			else {
@@ -227,6 +254,12 @@ void Newgame() {
 		if (getkey == 13) {
 			if (count == 1) {
 				system("cls");
+				GotoXY(20, 10);
+				cout << "Player1 name: ";
+				getline(cin, player1);
+				GotoXY(20, 12);
+				cout << "Player1 name: ";
+				getline(cin, player2);
 				StartGame();
 				PlayPVP();
 				system("cls");
@@ -253,6 +286,7 @@ void Newgame() {
 }
 
 void LoadGame() {
+	UnNocursortype();
 	system("cls");
 	string name;
 	int line = 0;
@@ -301,7 +335,6 @@ void LoadGame() {
 			}
 			_X = _A[0][0].x; _Y = _A[0][0].y;
 			PlayPVP();
-
 		}
 	}
 	SaveName1.close();
@@ -318,27 +351,28 @@ void Menu() {
 	char key;
 	int counter = 1;
 	while (1) {
+		Nocursortype();
 		menu_display();
 
 		GotoXY(55, 18);
 		SetColor(15, set[0]);
-		cout << "1.New game";
+		cout << "1.NEW GAME";
 
 		GotoXY(55, 19);
 		SetColor(15, set[1]);
-		cout << "2.Help";
+		cout << "2.HELP";
 
 		GotoXY(55, 20);
 		SetColor(15, set[2]);
-		cout << "3.Load game";
+		cout << "3.LOAD GAME";
 
 		GotoXY(55, 21);
 		SetColor(15, set[3]);
-		cout << "4.About";
+		cout << "4.ABOUT";
 
 		GotoXY(55, 22);
 		SetColor(15, set[4]);
-		cout << "5.Exit";
+		cout << "5.EXIT";
 
 		key = toupper(_getch());
 
@@ -353,7 +387,6 @@ void Menu() {
 		if (key == 13) {
 			if (counter == 1) {
 				Newgame();
-			
 			}
 
 			if (counter == 2) {
@@ -363,9 +396,6 @@ void Menu() {
 			if (counter == 3) {
 				system("cls");
 				LoadGame();
-
-				
-
 			}
 			if (counter == 4) {
 				system("cls");
