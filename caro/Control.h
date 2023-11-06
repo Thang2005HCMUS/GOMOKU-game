@@ -7,6 +7,7 @@
 #include<vector>
 #include"Model.h"
 using namespace std;
+
 void MoveRight() {
 	if (_X < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].x) {
 		_X += 4;
@@ -40,8 +41,6 @@ void PlayPVP() {
 	vector<int> mapy;
 	UnNocursortype();
 	GotoXY(_X, _Y);
-	int x1 = 0;
-	int x2 = 0;
 	while (1) {
 		GotoXY(_X, _Y);
 		_COMMAND = toupper(_getch());
@@ -73,8 +72,12 @@ void PlayPVP() {
 				cout << "X";
 				_TURN = false;
 				x1++;
-				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 21);
-				cout << "Player1: " << player1 << "    " << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
+				cout << "Player1: " << player1;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
+				cout<< "Step:" << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
 				break;
@@ -82,8 +85,12 @@ void PlayPVP() {
 				SetColor(15, 2);
 				cout << "O";
 				x2++;
-				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 23);
-				cout << "Player2: " << player2 << "    " << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				_TURN = true;
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
@@ -95,8 +102,12 @@ void PlayPVP() {
 			switch (CheckTick(mapx[mapx.size() - 1], mapy[mapy.size() - 1])) {
 			case 1:
 				x2--;
-				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 23);
-				cout << "Player2: " << player2 << "    " << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -117,8 +128,12 @@ void PlayPVP() {
 				break;
 			case -1:
 				x1--;
-				GotoXY(LEFT + 4 * BOARD_SIZE + 20, 21);
-				cout << "Player1: " << player1 << "    " << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
+				cout << "Player1: " << player1;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
+				cout << "Step:" << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -181,7 +196,7 @@ void PlayPVP() {
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
 			
-			GotoXY(80, 15); cout << "O thang!";
+			owin();
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
 			while (1) {
@@ -200,7 +215,7 @@ void PlayPVP() {
 			}	
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
-			GotoXY(80, 15); cout << "X thang!";
+			xwin();
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
 			while (1) {
@@ -306,8 +321,9 @@ void LoadGame() {
 	cin >> name;
 	ifstream SaveName1("filename.txt");
 	string read1;
-	
+	int countall = 0, callfail = 0;
 	while (getline(SaveName1, read1)) {
+		countall++;
 		if (read1 == name) {
 			filename = name;
 			system("cls");
@@ -336,6 +352,14 @@ void LoadGame() {
 			_X = _A[0][0].x; _Y = _A[0][0].y;
 			PlayPVP();
 		}
+		else callfail++;
+	}
+	if (callfail == countall) {
+		system("cls");
+		GotoXY(55, 20);
+		cout << "FILE NOT EXIT!";
+		Sleep(2000);
+		system("cls");
 	}
 	SaveName1.close();
 }
@@ -356,23 +380,23 @@ void Menu() {
 
 		GotoXY(55, 18);
 		SetColor(15, set[0]);
-		cout << "1.NEW GAME";
+		cout << "1.New Game";
 
 		GotoXY(55, 19);
 		SetColor(15, set[1]);
-		cout << "2.HELP";
+		cout << "2.Help";
 
 		GotoXY(55, 20);
 		SetColor(15, set[2]);
-		cout << "3.LOAD GAME";
+		cout << "3.Load game";
 
 		GotoXY(55, 21);
 		SetColor(15, set[3]);
-		cout << "4.ABOUT";
+		cout << "4.About";
 
 		GotoXY(55, 22);
 		SetColor(15, set[4]);
-		cout << "5.EXIT";
+		cout << "5.Exit";
 
 		key = toupper(_getch());
 
