@@ -6,6 +6,7 @@
 #include"Allmenu.h"
 #include<vector>
 #include"Model.h"
+#include"Graphics.h"
 using namespace std;
 
 void MoveRight() {
@@ -62,6 +63,13 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 27) {
 			system("cls");
+			x1 = 0;
+			x2 = 0;
+			win1 = 0; win2 = 0;
+			lose1 = 0;
+			lose2 = 0;
+			draw1 = 0;
+			draw2 = 0;
 			break;
 		}
 		else if (_COMMAND == 13 or _COMMAND == 32) {
@@ -195,7 +203,8 @@ void PlayPVP() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
-			
+			x1 = 0;
+			x2 = 0;
 			owin();
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
@@ -209,12 +218,20 @@ void PlayPVP() {
 				SetColor(15, 0);
 			}
 			_COMMAND = toupper(_getch());
-			if (_COMMAND == 'Y') { StartGame(); PlayPVP(); break; }
+			if (_COMMAND == 'Y') {
+				win2++;
+				lose1++;
+				StartGame(); PlayPVP(); break; }
 			else {
+				win1 = 0; win2 = 0;
+				lose1 = 0; lose2 = 0;
+				draw1 = 0; draw2 = 0;
 				break;
 			}	
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
+			x1 = 0;
+			x2 = 0;
 			xwin();
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
@@ -229,8 +246,14 @@ void PlayPVP() {
 				SetColor(15, 0);
 			}
 			_COMMAND = toupper(_getch());
-			if (_COMMAND == 'Y') { StartGame(); PlayPVP();  break; }
+			if (_COMMAND == 'Y') { 
+				win1++;
+				lose2++;
+				StartGame(); PlayPVP();  break; }
 			else {
+				win1 = 0; win2 = 0;
+				lose1 = 0; lose2 = 0;
+				draw1 = 0; draw2 = 0;
 				break;
 			}
 		}
@@ -338,10 +361,12 @@ void LoadGame() {
 					if (_A[i][j].c == -1) {
 						SetColor(15, 5);
 						cout << "X";
+						_TURN = false;
 					}
 					if (_A[i][j].c == 1) {
 						SetColor(15, 2);
 						cout << "O";
+						_TURN = true;
 
 					}
 					if (_A[i][j].c == 0) {
@@ -350,6 +375,7 @@ void LoadGame() {
 				}
 			}
 			_X = _A[0][0].x; _Y = _A[0][0].y;
+			
 			PlayPVP();
 		}
 		else callfail++;
@@ -377,6 +403,8 @@ void Menu() {
 	while (1) {
 		Nocursortype();
 		menu_display();
+		Remote_Graphic();
+		XO_Graphic();
 
 		GotoXY(55, 18);
 		SetColor(15, set[0]);
@@ -415,6 +443,7 @@ void Menu() {
 
 			if (counter == 2) {
 				system("cls");
+				Remote_Graphic();
 				Help();
 			}
 			if (counter == 3) {
@@ -423,6 +452,8 @@ void Menu() {
 			}
 			if (counter == 4) {
 				system("cls");
+				Remote_Graphic();
+				XO_Graphic();
 				About();
 			}
 			if (counter == 5) {

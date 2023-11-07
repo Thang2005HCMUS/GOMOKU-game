@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="Allmenu.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>

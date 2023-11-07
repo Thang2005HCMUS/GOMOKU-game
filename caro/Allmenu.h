@@ -10,12 +10,39 @@
 using namespace std;
 
 void Help() {
-	GotoXY(10, 5);
-	cout << "Use A,D,S,W to move.";
-	GotoXY(10, 6);
-	cout << "Use Enter to tick! ";
+	GotoXY(37, 3);
+	cout << "Play PVP";
+	GotoXY(16, 5);
+	cout << "Player1";
 	GotoXY(10, 7);
-	cout << "<----Press Esc to quit---->";
+	cout << "-Press W to move up";
+	GotoXY(10, 8);
+	cout << "-Press S to move down";
+	GotoXY(10, 9);
+	cout << "-Press D to move right";
+	GotoXY(10, 10);
+	cout << "-Press A to move left";
+	GotoXY(10, 12);
+	cout << "-Press Enter to tick";
+	GotoXY(59, 5);
+	cout << "Player 2:";
+	GotoXY(50, 7);
+	cout << "-Press Top key to move up";
+	GotoXY(50, 8);
+	cout << "-Press Down key to move down";
+	GotoXY(50, 9);
+	cout << "-Press Right key to move right";
+	GotoXY(50, 10);
+	cout << "-Press Left key to move left";
+	GotoXY(50, 12);
+	cout << "-Press Space to tick";
+	GotoXY(37, 17);
+	cout << "Play PVC";
+	GotoXY(10, 19);
+	cout << ".............";
+	GotoXY(27, 30);
+	cout << "<-----Press Esc to quit----->";
+	
 	while (1) {
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) break;

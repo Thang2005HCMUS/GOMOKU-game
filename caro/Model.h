@@ -20,8 +20,17 @@ void Save() {
 		}
 		SaveGame << endl;
 	}
+	SaveGame << player1;
+	SaveGame << endl;
+	SaveGame << x1 << " " << win1 << " " << " " << lose1 << " " << draw1 << endl;
+	SaveGame << player2 << endl;
+	SaveGame << x2 << " " << win2 << " " << lose2 << " " << draw1 << endl;
+
 	SaveGame.close();
 }
+
+
+
 void Load() {
 	ifstream LoadGame;
 	LoadGame.open(filename);
@@ -31,9 +40,14 @@ void Load() {
 			LoadGame >> _A[i][j].c;
 		}
 	}
-	
+	LoadGame >> player1;
+	LoadGame >> x1; LoadGame >> win1; LoadGame >> lose1; LoadGame >> draw1;
+	LoadGame >> player2;
+	LoadGame >> x2; LoadGame >> win2; LoadGame >> lose2; LoadGame >> draw2;
 	LoadGame.close();
  }
+
+
 void SaveFileName() {
 	ofstream SaveName;
 	SaveName.open("filename.txt",ios::app);
