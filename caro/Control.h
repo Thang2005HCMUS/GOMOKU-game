@@ -296,7 +296,7 @@ void Newgame() {
 				cout << "Player1 name: ";
 				getline(cin, player1);
 				GotoXY(20, 12);
-				cout << "Player1 name: ";
+				cout << "Player2 name: ";
 				getline(cin, player2);
 				StartGame();
 				PlayPVP();
