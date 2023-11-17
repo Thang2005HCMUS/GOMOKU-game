@@ -266,6 +266,8 @@ void PlayPVP() {
 
 void Newgame() {
 	system("cls");
+	Remote_Graphic();
+	menu_display();
 	int s[2] = { 4,0 };
 	int getkey = -1;
 	int count = 1;
@@ -273,11 +275,11 @@ void Newgame() {
 	while (1) {
 
 		SetColor(15, s[0]);
-		GotoXY(50, 13);
+		GotoXY(55, 16);
 		cout << "1.Play vs Player";
 
 		SetColor(15, s[1]);
-		GotoXY(50, 14);
+		GotoXY(55, 17);
 		cout << "2.Play vs Computer";
 
 		getkey = toupper(_getch());
@@ -326,6 +328,8 @@ void Newgame() {
 void LoadGame() {
 	UnNocursortype();
 	system("cls");
+	Remote_Graphic();
+	listgame_Graphic();
 	string name;
 	int line = 0;
 	GotoXY(50, 5);
@@ -375,7 +379,7 @@ void LoadGame() {
 				}
 			}
 			_X = _A[0][0].x; _Y = _A[0][0].y;
-			
+
 			PlayPVP();
 		}
 		else callfail++;
@@ -406,23 +410,23 @@ void Menu() {
 		Remote_Graphic();
 		XO_Graphic();
 
-		GotoXY(55, 18);
+		GotoXY(58, 17);
 		SetColor(15, set[0]);
 		cout << "1.New Game";
 
-		GotoXY(55, 19);
+		GotoXY(58, 18);
 		SetColor(15, set[1]);
 		cout << "2.Help";
 
-		GotoXY(55, 20);
+		GotoXY(58, 19);
 		SetColor(15, set[2]);
 		cout << "3.Load game";
 
-		GotoXY(55, 21);
+		GotoXY(58, 20);
 		SetColor(15, set[3]);
 		cout << "4.About";
 
-		GotoXY(55, 22);
+		GotoXY(58, 21);
 		SetColor(15, set[4]);
 		cout << "5.Exit";
 
@@ -453,7 +457,6 @@ void Menu() {
 			if (counter == 4) {
 				system("cls");
 				Remote_Graphic();
-				XO_Graphic();
 				About();
 			}
 			if (counter == 5) {

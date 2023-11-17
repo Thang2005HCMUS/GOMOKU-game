@@ -51,7 +51,7 @@ void Help() {
 }
 
 void About() {
-	GotoXY(10, 5);
+	GotoXY(10, 4);
 	cout << "GROUP 10";
 	GotoXY(10, 6);
 	cout << "MEMBER:";
@@ -63,8 +63,12 @@ void About() {
 	cout << "3.Chau Van Minh Khoa";
 	GotoXY(10, 10);
 	cout << "4.Phan Ngoc Quan";
-	GotoXY(10, 11);
-	cout << "<----Press Esc to quit---->";
+	GotoXY(10, 12);
+	cout << "----------------------------------";
+	GotoXY(10, 13);
+	cout << "Instructor: PhD.Truong Toan Thinh";
+	GotoXY(10, 15);
+	cout << "<--------Press Esc to quit-------->";
 	while (1) {
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) break;

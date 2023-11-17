@@ -202,43 +202,43 @@ void menu_display() {
 }
 
 void Remote_Graphic() {
-	HighLight(78, 16, 2, 6, 0);
-	HighLight(110, 16, 2, 6, 0);
+	HighLight(88, 16, 2, 6, 0);
+	HighLight(120, 16, 2, 6, 0);
 	// trên
-	HighLight(80, 15, 2, 1, 0);
-	HighLight(82, 14, 8, 1, 0);
-	HighLight(90, 15, 10, 1, 0);
-	HighLight(108, 15, 2, 1, 0);
-	HighLight(100, 14, 8, 1, 0);
+	HighLight(90, 15, 2, 1, 0);
+	HighLight(92, 14, 8, 1, 0);
+	HighLight(100, 15, 10, 1, 0);
+	HighLight(118, 15, 2, 1, 0);
+	HighLight(110, 14, 8, 1, 0);
 	//d??i
-	HighLight(80, 22, 2, 1, 0);
-	HighLight(108, 22, 2, 1, 0);
-	HighLight(82, 23, 6, 1, 0);
-	HighLight(102, 23, 6, 1, 0);
-	HighLight(88, 21, 2, 2, 0);
-	HighLight(100, 21, 2, 2, 0);
-	HighLight(90, 20, 10, 1, 0);
-	//GREY
-	HighLight(80, 20, 2, 1, 8);
-	HighLight(88, 20, 2, 1, 8);
-	HighLight(100, 20, 2, 1, 8);
-	HighLight(108, 20, 2, 1, 8);
-	HighLight(80, 21, 8, 1, 8);
-	HighLight(102, 21, 8, 1, 8);
-	HighLight(82, 22, 6, 1, 8);
-	HighLight(102, 22, 6, 1, 8);
+	HighLight(90, 22, 2, 1, 0);
+	HighLight(118, 22, 2, 1, 0);
+	HighLight(92, 23, 6, 1, 0);
+	HighLight(112, 23, 6, 1, 0);
+	HighLight(98, 21, 2, 2, 0);
+	HighLight(110, 21, 2, 2, 0);
+	HighLight(100, 20, 10, 1, 0);
+	//grey
+	HighLight(90, 20, 2, 1, 8);
+	HighLight(98, 20, 2, 1, 8);
+	HighLight(110, 20, 2, 1, 8);
+	HighLight(118, 20, 2, 1, 8);
+	HighLight(90, 21, 8, 1, 8);
+	HighLight(112, 21, 8, 1, 8);
+	HighLight(92, 22, 6, 1, 8);
+	HighLight(112, 22, 6, 1, 8);
 	//chu thap 4 màu
-	HighLight(104, 16, 2, 1, 2);
-	HighLight(102, 17, 2, 1, 1);
-	HighLight(106, 17, 2, 1, 4);
-	HighLight(104, 18, 2, 1, 6);
+	HighLight(114, 16, 2, 1, 2);
+	HighLight(112, 17, 2, 1, 1);
+	HighLight(116, 17, 2, 1, 4);
+	HighLight(114, 18, 2, 1, 6);
 
 	//chu thap BLACK
-	HighLight(84, 16, 2, 1, 0);
-	HighLight(82, 17, 2, 1, 0);
-	HighLight(86, 17, 2, 1, 0);
-	HighLight(84, 18, 2, 1, 0);
-	HighLight(84, 17, 2, 1, 0);
+	HighLight(94, 16, 2, 1, 0);
+	HighLight(92, 17, 2, 1, 0);
+	HighLight(96, 17, 2, 1, 0);
+	HighLight(94, 18, 2, 1, 0);
+	HighLight(94, 17, 2, 1, 0);
 
 }
 
@@ -424,4 +424,41 @@ void owin() {
 		}
 
 	}
+}
+
+void listgame_Graphic() {
+	// black
+	HighLight(12, 12, 2, 14, 0);
+	HighLight(14, 11, 2, 1, 0);
+	HighLight(16, 10, 20, 1, 0);
+	HighLight(36, 11, 2, 1, 0);
+	HighLight(38, 12, 2, 14, 0);
+	HighLight(36, 26, 2, 1, 0);
+	HighLight(14, 26, 2, 1, 0);
+	HighLight(16, 27, 20, 1, 0);
+	//grey
+	HighLight(14, 12, 2, 14, 8);
+	HighLight(16, 11, 20, 1, 8);
+	HighLight(36, 12, 2, 14, 8);
+	HighLight(16, 26, 20, 1, 8);
+
+	//list
+	HighLight(20, 17, 12, 1, 2);
+	HighLight(20, 19, 12, 1, 1);
+	HighLight(20, 21, 12, 1, 4);
+	HighLight(20, 23, 12, 1, 6);
+
+	//chu thap 4 màu
+	HighLight(30, 13, 2, 1, 0);
+	HighLight(28, 14, 2, 1, 0);
+	HighLight(32, 14, 2, 1, 0);
+	HighLight(30, 15, 2, 1, 0);
+
+	//chu thap BLACK
+	HighLight(18, 13, 2, 1, 0);
+	HighLight(18, 15, 2, 1, 0);
+	HighLight(22, 13, 2, 1, 0);
+	HighLight(20, 14, 2, 1, 0);
+	HighLight(22, 15, 2, 1, 0);
+
 }
