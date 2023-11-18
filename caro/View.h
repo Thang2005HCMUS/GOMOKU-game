@@ -10,6 +10,10 @@ using namespace std;
 #define LEFT 1									 
 #define TOP 1	
 
+long long attack[7] = { 0, 9, 54, 162, 1458, 13112, 118008 };
+long long defense[7] = { 0, 3, 27, 99, 729, 6561, 59049 };
+
+
 struct _POINT {
 	int x, y, c;
 };
@@ -212,15 +216,6 @@ int CheckTick(int pX, int pY) {
 		}
 	}
 }
-
-int Check(int i, int j) {
-	
-	return _A[i][j].c;
-
-}
-
-// thang thua hoa
-
 int testBoard(int pX, int pY, int _size)
 {
 	// Xu ly hoa
@@ -279,6 +274,7 @@ int testBoard(int pX, int pY, int _size)
 
 		if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
 		{
+			
 			pX = i;
 			pY = y;
 			return 1;
@@ -441,17 +437,22 @@ void DrawLineWin(int pX, int pY)
 
 		if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
 		{
-			for (int j = 0; j < 5; j++) {
-				GotoXY(y * 4 + LEFT + 2, (i+j) * 2 + TOP + 1);
+			int j = 0;
+			while (_A[i+j][y].c ==1) {
+				GotoXY(y * 4 + LEFT + 2, (i + j) * 2 + TOP + 1);
 				cout << "O";
+				j++;
+				
 			}
 			return ;//1
 		}
 		if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
 		{
-			for (int j = 0; j < 5; j++) {
+			int j = 0;
+			while (_A[i + j][y].c == -1) {
 				GotoXY(y * 4 + LEFT + 2, (i + j) * 2 + TOP + 1);
 				cout << "X";
+				j++;
 			}
 			return ;//-1
 		}
@@ -473,18 +474,21 @@ void DrawLineWin(int pX, int pY)
 
 		if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
 		{
-			for (int j = 0; j < 5; j++) {
+			int j = 0;
+			while (_A[x ][i+j].c == 1) {
 				GotoXY((i+j) * 4 + LEFT + 2, x * 2 + TOP + 1);
 				cout << "O";
+				j++;
 			}
 			return ;//1
 		}
 		if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
 		{
-
-			for (int j = 0; j < 5; j++) {
-				GotoXY((i + j) * 4 + LEFT + 2, x * 2 + TOP + 1);
+			int j = 0;
+			while (_A[x][i + j].c == -1) {
+				GotoXY((i+j) * 4 + LEFT + 2, x * 2 + TOP + 1);
 				cout << "X";
+				j++;
 			}
 			return ;//-1
 		}
@@ -516,18 +520,21 @@ void DrawLineWin(int pX, int pY)
 
 			if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
 			{
-
-				for (int h = 0; h < 5; h++) {
-					GotoXY((j+h) * 4 + LEFT + 2, (i+h) * 2 + TOP + 1);
+				int h = 0;
+				while (_A[i + h][j + h].c == 1) {
+					GotoXY((j + h) * 4 + LEFT + 2, (i + h) * 2 + TOP + 1);
 					cout << "O";
+					h++;
 				}
 				return ;//1
 			}
 			if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
 			{
-				for (int h = 0; h < 5; h++) {
-					GotoXY((j+h ) * 4 + LEFT + 2, (i+h ) * 2 + TOP + 1);
+				int h = 0;
+				while (_A[i + h][j + h].c == -1) {
+					GotoXY((j + h) * 4 + LEFT + 2, (i + h) * 2 + TOP + 1);
 					cout << "X";
+					h++;
 				}
 				return ;//-1
 			}
@@ -559,23 +566,770 @@ void DrawLineWin(int pX, int pY)
 			}
 			if (res == 5 && (_A[x1][y1].c != -1 || _A[x2][y2].c != -1))
 			{
-				for (int h = 0; h < 5; h++) {
+				int h = 0;
+				while (_A[i-h][j+h].c == 1) {
 					GotoXY((j + h) * 4 + LEFT + 2, (i - h) * 2 + TOP + 1);
 					cout << "O";
+					h++;
 				}
-				return ;//1
+				return ;
 			}
 			if (res == -5 && (_A[x1][y1].c != 1 || _A[x2][y2].c != 1))
 			{
-				for (int h = 0; h < 5; h++) {
+				int h = 0;
+				while (_A[i-h][j+h].c == -1) {
 					GotoXY((j + h) * 4 + LEFT + 2, (i - h) * 2 + TOP + 1);
 					cout << "X";
+					h++;
 				}
-				return ;//-1
+				return ;
 			}
 		}
 	}
+}
+long SoDiemTanCong_DuyetNgang(long Dong, long Cot)
+{
+	long iScoreTempNgang = 0;
+	long iScoreAttack = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa2 = 0;
+	int iSoQuanDich2 = 0;
+	for (int iDem = 1; iDem < 6 && Cot + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong][Cot + iDem].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong][Cot + iDem].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong][Cot + iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong][Cot + iDem2].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong][Cot + iDem2].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong][Cot + iDem2].c == 0)
+					break;
+			}
+			break;
+		}
+	}
 
+
+	for (int iDem = 1; iDem < 6 && Cot - iDem >= 0; iDem++)
+	{
+		if (_A[Dong][Cot - iDem].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong][Cot - iDem].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong][Cot - iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong][Cot - iDem2].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong][Cot - iDem2].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong][Cot - iDem2].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+	if (iSoQuanDich == 2)
+		return 0;
+	if (iSoQuanDich == 0)
+		iScoreTempNgang += attack[iSoQuanTa] * 2;
+	else
+		iScoreTempNgang += attack[iSoQuanTa];
+	if (iSoQuanDich2 == 0)
+		iScoreTempNgang += attack[iSoQuanTa2] * 2;
+	else
+		iScoreTempNgang += attack[iSoQuanTa2];
+
+	if (iSoQuanTa >= iSoQuanTa2)
+		iScoreTempNgang -= 1;
+	else
+		iScoreTempNgang -= 2;
+	if (iSoQuanTa == 4)
+		iScoreTempNgang *= 2;
+	if (iSoQuanTa == 0)
+		iScoreTempNgang += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempNgang += defense[iSoQuanDich];
+	if (iSoQuanTa2 == 0)
+		iScoreTempNgang += defense[iSoQuanDich2] * 2;
+	else
+		iScoreTempNgang += defense[iSoQuanDich2];
+	return iScoreTempNgang;
+}
+long SoDiemTanCong_DuyetDoc(long Dong, long Cot)
+{
+	long iScoreTempDoc = 0;
+	long iScoreAttack = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa2 = 0;
+	int iSoQuanDich2 = 0;
+	for (int iDem = 1; iDem < 6 && Dong + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong + iDem][Cot].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong + iDem][Cot].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong + iDem][Cot].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Dong + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong + iDem2][Cot].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong + iDem2][Cot].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong + iDem2][Cot].c == 0)
+					break;
+			}
+			break;
+		}
+
+	}
+
+
+	for (int iDem = 1; iDem < 6 && Dong - iDem >= 0; iDem++)
+	{
+		if (_A[Dong - iDem][Cot].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong - iDem][Cot].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong - iDem][Cot].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Dong - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong - iDem2][Cot].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong - iDem2][Cot].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong - iDem2][Cot].c == 0)
+				{
+					break;
+				}
+			}
+			break;
+		}
+	}
+
+	if (iSoQuanDich == 2)
+		return 0;
+	if (iSoQuanDich == 0)
+		iScoreTempDoc += attack[iSoQuanTa] * 2;
+	else
+		iScoreTempDoc += attack[iSoQuanTa];
+	if (iSoQuanDich2 == 0)
+		iScoreTempDoc += attack[iSoQuanTa2] * 2;
+	else
+		iScoreTempDoc += attack[iSoQuanTa2];
+
+	if (iSoQuanTa >= iSoQuanTa2)
+		iScoreTempDoc -= 1;
+	else
+		iScoreTempDoc -= 2;
+	if (iSoQuanTa == 4)
+		iScoreTempDoc *= 2;
+	if (iSoQuanTa == 0)
+		iScoreTempDoc += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempDoc += defense[iSoQuanDich];
+	if (iSoQuanTa2 == 0)
+		iScoreTempDoc += defense[iSoQuanDich2] * 2;
+	else
+		iScoreTempDoc += defense[iSoQuanDich2];
+	return iScoreTempDoc;
+}
+
+long SoDiemTanCong_DuyetCheo1(long Dong, long Cot)
+{
+	long iScoreTempCheoNguoc = 0;
+	long iScoreAttack = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa2 = 0;
+	int iSoQuanDich2 = 0;
+	for (int iDem = 1; iDem < 6 && Cot + iDem < BOARD_SIZE && Dong + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong + iDem][Cot + iDem].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong + iDem][Cot + iDem].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong + iDem][Cot + iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot + iDem2 < BOARD_SIZE && Dong + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong + iDem2][Cot + iDem2].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong + iDem2][Cot + iDem2].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong + iDem2][Cot + iDem2].c == 0)
+				{
+					break;
+				}
+			}
+			break;
+		}
+	}
 	
+
+	for (int iDem = 1; iDem < 6 && Cot - iDem >= 0 && Dong - iDem >= 0; iDem++)
+	{
+		if (_A[Dong - iDem][Cot - iDem].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong - iDem][Cot - iDem].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong - iDem][Cot - iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot - iDem2 >= 0 && Dong - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong - iDem2][Cot - iDem2].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong - iDem2][Cot - iDem2].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong - iDem2][Cot - iDem2].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+	if (iSoQuanDich == 2)
+		return 0;
+	if (iSoQuanDich == 0)
+		iScoreTempCheoNguoc += attack[iSoQuanTa] * 2;
+	else
+		iScoreTempCheoNguoc += attack[iSoQuanTa];
+	if (iSoQuanDich2 == 0)
+		iScoreTempCheoNguoc += attack[iSoQuanTa2] * 2;
+	else
+		iScoreTempCheoNguoc += attack[iSoQuanTa2];
+
+	if (iSoQuanTa >= iSoQuanTa2)
+		iScoreTempCheoNguoc -= 1;
+	else
+		iScoreTempCheoNguoc -= 2;
+	if (iSoQuanTa == 4)
+		iScoreTempCheoNguoc *= 2;
+	if (iSoQuanTa == 0)
+		iScoreTempCheoNguoc += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempCheoNguoc += defense[iSoQuanDich];
+	if (iSoQuanTa2 == 0)
+		iScoreTempCheoNguoc += defense[iSoQuanDich2] * 2;
+	else
+		iScoreTempCheoNguoc += defense[iSoQuanDich2];
+	return iScoreTempCheoNguoc;
+}
+long SoDiemTanCong_DuyetCheo2(long Dong, long Cot)
+{
+	long iScoreTempCheoXuoi = 0;
+	long iScoreAttack = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa2 = 0;
+	int iSoQuanDich2 = 0;
+	for (int iDem = 1; iDem < 6 && Cot - iDem >= 0 && Dong + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong + iDem][Cot - iDem].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong + iDem][Cot - iDem].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong + iDem][Cot - iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot - iDem2 >= 0 && Dong + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong + iDem2][Cot - iDem2].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong + iDem2][Cot - iDem2].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong + iDem2][Cot - iDem2].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+
+
+	for (int iDem = 1; iDem < 6 && Cot + iDem < BOARD_SIZE && Dong - iDem >= 0; iDem++)
+	{
+		if (_A[Dong - iDem][Cot + iDem].c == 1)
+			iSoQuanTa++;
+		if (_A[Dong - iDem][Cot + iDem].c == -1)
+		{
+			iSoQuanDich++;
+			break;
+		}
+		if (_A[Dong - iDem][Cot + iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot + iDem2 < BOARD_SIZE && Dong - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong - iDem2][Cot + iDem2].c == 1)
+					iSoQuanTa2++;
+				if (_A[Dong - iDem2][Cot + iDem2].c == -1)
+				{
+					iSoQuanDich2++;
+					break;
+				}
+				if (_A[Dong - iDem2][Cot + iDem2].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+	if (iSoQuanDich == 2)
+		return 0;
+	if (iSoQuanDich == 0)
+		iScoreTempCheoXuoi += attack[iSoQuanTa] * 2;
+	else
+		iScoreTempCheoXuoi += attack[iSoQuanTa];
+	if (iSoQuanDich2 == 0)
+		iScoreTempCheoXuoi += attack[iSoQuanTa2] * 2;
+	else
+		iScoreTempCheoXuoi += attack[iSoQuanTa2];
+
+	if (iSoQuanTa >= iSoQuanTa2)
+		iScoreTempCheoXuoi -= 1;
+	else
+		iScoreTempCheoXuoi -= 2;
+	if (iSoQuanTa == 4)
+		iScoreTempCheoXuoi *= 2;
+	if (iSoQuanTa == 0)
+		iScoreTempCheoXuoi += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempCheoXuoi += defense[iSoQuanDich];
+	if (iSoQuanTa2 == 0)
+		iScoreTempCheoXuoi += defense[iSoQuanDich2] * 2;
+	else
+		iScoreTempCheoXuoi += defense[iSoQuanDich2];
+	return iScoreTempCheoXuoi;
+}
+
+long SoDiemPhongThu_DuyetDoc(long Dong, long Cot)
+{
+	long iScoreTempDoc = 0;
+	long iScoreDefend = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich2 = 0;
+	int iSoQuanTa2 = 0;
+	for (int iDem = 1; iDem < 6 && Dong + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong + iDem][Cot].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong + iDem][Cot].c == -1)
+			iSoQuanDich++;
+		if (_A[Dong + iDem][Cot].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Dong + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong + iDem2][Cot].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong + iDem2][Cot].c == -1)
+					iSoQuanDich2++;
+				if (_A[Dong + iDem2][Cot].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+
+
+	for (int iDem = 1; iDem < 6 && Dong - iDem >= 0; iDem++)
+	{
+		if (_A[Dong - iDem][Cot].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong - iDem][Cot].c == -1)
+			iSoQuanDich++;
+		if (_A[Dong - iDem][Cot].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Dong - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong - iDem2][Cot].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong - iDem2][Cot].c == -1)
+					iSoQuanDich2++;
+				if (_A[Dong - iDem2][Cot].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+
+
+	if (iSoQuanTa == 2)
+		return 0;
+	if (iSoQuanTa == 0)
+		iScoreTempDoc += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempDoc += defense[iSoQuanDich];
+	
+	if (iSoQuanDich >= iSoQuanDich2)
+		iScoreTempDoc -= 1;
+	else
+		iScoreTempDoc -= 2;
+	if (iSoQuanDich == 4)
+		iScoreTempDoc *= 2;
+	return iScoreTempDoc;
+}
+
+long SoDiemPhongThu_DuyetNgang(long Dong, long Cot)
+{
+	long iScoreTempNgang = 0;
+	long iScoreDefend = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich2 = 0;
+	int iSoQuanTa2 = 0;
+	for (int iDem = 1; iDem < 6 && Cot + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong][Cot + iDem].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong][Cot + iDem].c == -1)
+			iSoQuanDich++;
+		if (_A[Dong][Cot + iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong][Cot + iDem2].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong][Cot + iDem2].c == -1)
+					iSoQuanDich2++;
+				if (_A[Dong][Cot + iDem2].c == 0)
+					break;
+			}
+			break;
+		}
+	}
+	
+
+	for (int iDem = 1; iDem < 6 && Cot - iDem >= 0; iDem++)
+	{
+		if (_A[Dong][Cot - iDem].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong][Cot - iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong][Cot - iDem2].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong][Cot - iDem2].c == 0)
+					break;
+				if (_A[Dong][Cot - iDem2].c == -1)
+					iSoQuanDich2++;
+			}
+			break;
+		}
+		if (_A[Dong][Cot - iDem].c == -1)
+			iSoQuanDich++;
+	}
+
+	if (iSoQuanTa == 2)
+		return 0;
+	if (iSoQuanTa == 0)
+		iScoreTempNgang += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempNgang += defense[iSoQuanDich];
+	
+	if (iSoQuanDich >= iSoQuanDich2)
+		iScoreTempNgang -= 1;
+	else
+		iScoreTempNgang -= 2;
+	if (iSoQuanDich == 4)
+		iScoreTempNgang *= 2;
+	return iScoreTempNgang;
+}
+
+long SoDiemPhongThu_DuyetCheo1(long Dong, long Cot)
+{
+
+	long iScoreTempCheoNguoc = 0;
+	long iScoreDefend = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich2 = 0;
+	int iSoQuanTa2 = 0;
+	for (int iDem = 1; iDem < 6 && Cot + iDem < BOARD_SIZE && Dong + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong + iDem][Cot + iDem].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong + iDem][Cot + iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot + iDem2 < BOARD_SIZE && Dong + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong + iDem2][Cot + iDem2].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong + iDem2][Cot + iDem2].c == 0)
+					break;
+				if (_A[Dong + iDem2][Cot + iDem2].c == -1)
+					iSoQuanDich2++;
+			}
+			break;
+		}
+		if (_A[Dong + iDem][Cot + iDem].c == -1)
+			iSoQuanDich++;
+	}
+	//iScoreDefend += defense[iSoQuanDich];
+	//iSoQuanDich = 0;
+
+	for (int iDem = 1; iDem < 6 && Cot - iDem >= 0 && Dong - iDem >= 0; iDem++)
+	{
+		if (_A[Dong - iDem][Cot - iDem].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+
+		if (_A[Dong - iDem][Cot - iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot - iDem2 >= 0 && Dong - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong - iDem2][Cot - iDem2].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+
+				if (_A[Dong - iDem2][Cot - iDem2].c == 0)
+					break;
+				if (_A[Dong - iDem2][Cot - iDem2].c == -1)
+					iSoQuanDich2++;
+			}
+			break;
+		}
+		if (_A[Dong - iDem][Cot - iDem].c == -1)
+			iSoQuanDich++;
+	}
+	if (iSoQuanTa == 2)
+		return 0;
+	if (iSoQuanTa == 0)
+		iScoreTempCheoNguoc += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempCheoNguoc += defense[iSoQuanDich];
+	/*
+	if (iSoQuanTa == 0)
+	iScoreTempDoc += defense[iSoQuanDich2] * 2;
+	else
+	iScoreTempDoc += defense[iSoQuanDich2];
+	*/
+	if (iSoQuanDich >= iSoQuanDich2)
+		iScoreTempCheoNguoc -= 1;
+	else
+		iScoreTempCheoNguoc -= 2;
+	if (iSoQuanDich == 4)
+		iScoreTempCheoNguoc *= 2;
+	return iScoreTempCheoNguoc;
+}
+
+long SoDiemPhongThu_DuyetCheo2(long Dong, long Cot)
+{
+	long iScoreTempCheoXuoi = 0;
+	long iScoreDefend = 0;
+	int iSoQuanDich = 0;
+	int iSoQuanTa = 0;
+	int iSoQuanDich2 = 0;
+	int iSoQuanTa2 = 0;
+	for (int iDem = 1; iDem < 6 && Cot - iDem >= 0 && Dong + iDem < BOARD_SIZE; iDem++)
+	{
+		if (_A[Dong + iDem][Cot - iDem].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong + iDem][Cot - iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem2 < 7 && Cot - iDem2 >= 0 && Dong + iDem2 < BOARD_SIZE; iDem2++)
+			{
+				if (_A[Dong + iDem2][Cot - iDem2].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong + iDem2][Cot - iDem2].c == 0)
+					break;
+				if (_A[Dong + iDem2][Cot - iDem2].c == -1)
+					iSoQuanDich2++;
+			}
+			break;
+		}
+		if (_A[Dong + iDem][Cot - iDem].c == -1)
+			iSoQuanDich++;
+	}
+	//iScoreDefend += defense[iSoQuanDich];
+	//iSoQuanDich = 0;
+
+	for (int iDem = 1; iDem < 6 && Cot + iDem < BOARD_SIZE && Dong - iDem >= 0; iDem++)
+	{
+		if (_A[Dong - iDem][Cot + iDem].c == 1)
+		{
+			iSoQuanTa++;
+			break;
+		}
+		if (_A[Dong - iDem][Cot + iDem].c == 0)
+		{
+			for (int iDem2 = 2; iDem < 7 && Cot + iDem2 < BOARD_SIZE && Dong - iDem2 >= 0; iDem2++)
+			{
+				if (_A[Dong - iDem2][Cot + iDem2].c == 1)
+				{
+					iSoQuanTa2++;
+					break;
+				}
+				if (_A[Dong - iDem2][Cot + iDem2].c == 0)
+					break;
+				if (_A[Dong - iDem2][Cot + iDem2].c == -1)
+					iSoQuanDich2++;
+			}
+			break;
+		}
+		if (_A[Dong - iDem][Cot + iDem].c == -1)
+			iSoQuanDich++;
+	}
+
+
+	if (iSoQuanTa == 2)
+		return 0;
+	if (iSoQuanTa == 0)
+		iScoreTempCheoXuoi += defense[iSoQuanDich] * 2;
+	else
+		iScoreTempCheoXuoi += defense[iSoQuanDich];
+	/*
+	if (iSoQuanTa == 0)
+	iScoreTempDoc += defense[iSoQuanDich2] * 2;
+	else
+	iScoreTempDoc += defense[iSoQuanDich2];
+	*/
+	if (iSoQuanDich >= iSoQuanDich2)
+		iScoreTempCheoXuoi -= 1;
+	else
+		iScoreTempCheoXuoi -= 2;
+	if (iSoQuanDich == 4)
+		iScoreTempCheoXuoi *= 2;
+	return iScoreTempCheoXuoi;
+}
+
+_POINT Tim_Kiem_NuocDi()
+{
+	_POINT Oco;
+	int dong = 0, cot = 0;
+	long Diem = 0;
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			long DiemTanCong = 0;
+			long DiemPhongThu = 0;
+			if (_A[i][j].c == 0)
+			{
+				DiemTanCong += SoDiemTanCong_DuyetDoc(i, j);
+				DiemTanCong += SoDiemTanCong_DuyetNgang(i, j);
+				DiemTanCong += SoDiemTanCong_DuyetCheo1(i, j);
+				DiemTanCong += SoDiemTanCong_DuyetCheo2(i, j);
+				/////////////////////////////////////////////////////////
+				DiemPhongThu += SoDiemPhongThu_DuyetDoc(i, j);
+				DiemPhongThu += SoDiemPhongThu_DuyetNgang(i, j);
+				DiemPhongThu += SoDiemPhongThu_DuyetCheo1(i, j);
+				DiemPhongThu += SoDiemPhongThu_DuyetCheo2(i, j);
+
+				if (DiemTanCong > DiemPhongThu)
+				{
+					if (Diem < DiemTanCong)
+					{
+						Diem = DiemTanCong;
+						dong = i;
+						cot = j;
+					}
+				}
+				else
+				{
+					if (Diem < DiemPhongThu)
+					{
+						Diem = DiemPhongThu;
+						dong = i;
+						cot = j;
+					}
+				}
+			}
+		}
+	}
+	Oco.x=(cot * 4 + 2+LEFT);
+	Oco.y=(dong * 2 + 1+TOP);
+	
+	return Oco;
 }
 

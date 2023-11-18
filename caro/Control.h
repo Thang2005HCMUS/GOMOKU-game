@@ -63,13 +63,10 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 27) {
 			system("cls");
-			x1 = 0;
-			x2 = 0;
+			x1 = 0;   x2 = 0;
 			win1 = 0; win2 = 0;
-			lose1 = 0;
-			lose2 = 0;
-			draw1 = 0;
-			draw2 = 0;
+			lose1 = 0;	lose2 = 0;
+			draw1 = 0; draw2 = 0;
 			break;
 		}
 		else if (_COMMAND == 13 or _COMMAND == 32) {
@@ -78,6 +75,7 @@ void PlayPVP() {
 			case -1:
 				SetColor(15, 5);
 				cout << "X";
+				//
 				_TURN = false;
 				x1++;
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
@@ -92,6 +90,7 @@ void PlayPVP() {
 			case 1:
 				SetColor(15, 2);
 				cout << "O";
+				//
 				x2++;
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 				cout << "Player2: " << player2;
@@ -205,6 +204,7 @@ void PlayPVP() {
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
 			x1 = 0;
 			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
 			owin();
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
@@ -232,6 +232,7 @@ void PlayPVP() {
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
 			x1 = 0;
 			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
 			xwin();
 			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
 			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
@@ -262,6 +263,250 @@ void PlayPVP() {
 		}
 	}
 
+}
+
+void PlayPVC() {
+	vector<int> mapx;
+	vector<int> mapy;
+	UnNocursortype();
+	GotoXY(_X, _Y);
+	ResetData();
+	int x, y;
+	_TURN = false;
+	while (1) {
+		switch (_TURN) {
+		case 1:
+			GotoXY(_X, _Y);
+			_COMMAND = toupper(_getch());
+			if (_COMMAND == 'A' ) {
+				MoveLeft();
+				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			}
+			else if (_COMMAND == 'W' ) {
+				MoveUp();
+				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			}
+			else if (_COMMAND == 'S' ) {
+				MoveDown();
+				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			}
+			else if (_COMMAND == 'D' ) {
+				MoveRight();
+				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			}
+			else if (_COMMAND == 27) {
+				system("cls");
+				x1 = 0;   x2 = 0;
+				win1 = 0; win2 = 0;
+				lose1 = 0;	lose2 = 0;
+				draw1 = 0; draw2 = 0;
+				break;
+			}
+			// Danh co
+			else if (_COMMAND == 13 ) {
+				PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				switch (CheckBoard(_X, _Y)) {
+				case -1:
+					SetColor(15, 5);
+					cout << "X";
+					mapx.push_back(_X);
+					mapy.push_back(_Y);
+					x1++;
+					GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
+					cout << "Player1: " << player1;
+					GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
+					cout << "Step:" << x1 << " ";
+					GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
+					cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+					x = _X;
+					y = _Y;
+					_TURN = false;
+					break;
+				}
+			}
+			//NEW GAME
+			else if (_COMMAND == 59) {
+				StartGame();
+				x1 = 0;
+				x2 = 0;
+				_TURN = false;
+			}
+			//SAVE
+			else if (_COMMAND == 60) {
+				Save();
+				SaveFileName();
+				break;
+			}
+			//LOAD
+			else if (_COMMAND == 61) {
+				GotoXY(70, 5);
+				cout << "Nhap ten file muon choi ";
+				GotoXY(70, 6);
+				cout << "Nhap cho dung ten gium tui!";
+				cin >> filename;
+				Load();
+				system("cls");
+				DrawBoard(BOARD_SIZE, TOP, LEFT);
+				for (int i = 0; i < BOARD_SIZE; i++) {
+					for (int j = 0; j < BOARD_SIZE; j++) {
+						_X = _A[i][j].x;
+						_Y = _A[i][j].y;
+						GotoXY(_X, _Y);
+						if (_A[i][j].c == -1) {
+							SetColor(15, 5);
+							cout << "X";
+						}
+						if (_A[i][j].c == 1) {
+							SetColor(15, 2);
+							cout << "O";
+						}
+						if (_A[i][j].c == 0) {
+							cout << " ";
+						}
+					}
+				}
+			}
+			//UNDO
+			else if (_COMMAND == 62 && mapx.size() > 0 && mapy.size() > 0) {
+				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
+				cout << " ";
+				_X = mapx[mapx.size() - 1];
+				_Y = mapy[mapy.size() - 1];
+				GotoXY(_X, _Y);
+				//xoa toa do cuoi cung
+				if (mapx.size() > 1 && mapy.size() > 1) {
+					mapx.erase(mapx.begin() + mapx.size() - 1);
+					mapy.erase(mapy.begin() + mapy.size() - 1);
+				}
+				// dat lai trang thai cho o vua xoa
+				for (int i = 0; i < BOARD_SIZE; i++) {
+					for (int j = 0; j < BOARD_SIZE; j++) {
+						if (_A[i][j].x == _X && _A[i][j].y == _Y) {
+							_A[i][j].c = 0;
+						}
+					}
+				}
+				if(x1>0) x1--;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
+				cout << "Player1: " << player1;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
+				cout << "Step:" << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
+				cout << " ";
+				_X = mapx[mapx.size() - 1];
+				_Y = mapy[mapy.size() - 1];
+				GotoXY(_X, _Y);
+				if (mapx.size() > 1 && mapy.size() > 1) {
+					mapx.erase(mapx.begin() + mapx.size() - 1);
+					mapy.erase(mapy.begin() + mapy.size() - 1);
+				}
+				for (int i = 0; i < BOARD_SIZE; i++) {
+					for (int j = 0; j < BOARD_SIZE; j++) {
+						if (_A[i][j].x == _X && _A[i][j].y == _Y) {
+							_A[i][j].c = 0;
+						}
+					}
+				}
+				_TURN = true;
+			}
+			break;
+		case 0: 
+			int dem = 0;
+			for (int i = 0; i < BOARD_SIZE; i++) {
+				for (int j = 0; j < BOARD_SIZE; j++) {
+					if (_A[i][j].c == 0) {
+						dem += 1;
+					}
+				}
+			}
+			if (dem == BOARD_SIZE * BOARD_SIZE) {
+				_X = (BOARD_SIZE * 4 / 2) - 3;
+				_Y = (BOARD_SIZE * 2 / 2) - 1;
+				CheckBoard(_X, _Y);
+				GotoXY(_X, _Y);
+				SetColor(15, 2);
+				cout << "O";
+				_TURN = true;
+			}
+			else {
+				_X = Tim_Kiem_NuocDi().x;
+				_Y = Tim_Kiem_NuocDi().y;
+				CheckBoard(_X, _Y);
+				GotoXY(_X, _Y);
+				SetColor(15, 2);
+				cout << "O";
+				mapx.push_back(_X);
+				mapy.push_back(_Y);
+				
+				_TURN = true;
+			}
+			break;
+		}
+		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
+			x1 = 0;
+			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
+			owin();
+			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
+			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
+			while (1) {
+				if (_kbhit()) {
+					break;
+				}
+				SetColor(15, rand() % 15 + 1);
+				DrawLineWin(_X, _Y);
+				Sleep(100);
+				SetColor(15, 0);
+			}
+			_COMMAND = toupper(_getch());
+			if (_COMMAND == 'Y') {
+				win2++;
+				lose1++;
+				StartGame(); PlayPVP(); break;
+			}
+			else {
+				win1 = 0; win2 = 0;
+				lose1 = 0; lose2 = 0;
+				draw1 = 0; draw2 = 0;
+				break;
+			}
+		}
+		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
+			x1 = 0;
+			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
+			xwin();
+			GotoXY(80, 25); cout << "Ban co muon tiep tuc choi khong!";
+			GotoXY(80, 26); cout << "Bam Y de tiep tuc!";
+			while (1) {
+
+				if (_kbhit()) {
+					break;
+				}
+				SetColor(15, rand() % 15 + 1);
+				DrawLineWin(_X, _Y);
+				Sleep(100);
+				SetColor(15, 0);
+			}
+			_COMMAND = toupper(_getch());
+			if (_COMMAND == 'Y') {
+				win1++;
+				lose2++;
+				StartGame(); PlayPVP();  break;
+			}
+			else {
+				win1 = 0; win2 = 0;
+				lose1 = 0; lose2 = 0;
+				draw1 = 0; draw2 = 0;
+				break;
+			}
+		}
+		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
+			GotoXY(80, 25); cout << "Hoa!";  break;
+		}
+	}
 }
 
 void Newgame() {
@@ -309,7 +554,7 @@ void Newgame() {
 			if (count == 2) {
 				system("cls");
 				StartGame();
-				PlayPVP();
+				PlayPVC();
 				system("cls");
 				break;
 			}
