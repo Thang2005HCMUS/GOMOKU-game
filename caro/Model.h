@@ -9,7 +9,39 @@
 
 using namespace std;
 
-void Save() {
+void SavePVP() {
+	GotoXY(70, 5);
+	cout << "Nhap ten file de luu: ";
+	cin >> filename;
+	ofstream SaveGame(filename);
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			SaveGame << _A[i][j].c << " ";
+		}
+		SaveGame << endl;
+	}
+	if (player1 == "") {
+		SaveGame << " ";
+		SaveGame << endl;
+	}
+	if (player1 != "") {
+		SaveGame << player1 << endl;
+	}
+
+
+	SaveGame << x1 << " " << win1 << " " << " " << lose1 << " " << draw1 << endl;
+	if (player2 == "") {
+		SaveGame << " ";
+		SaveGame << endl;
+	}
+	if (player2 != "") {
+		SaveGame << player2 << endl;
+	}
+	SaveGame << x2 << " " << win2 << " " << lose2 << " " << draw1 << endl;
+	SaveGame.close();
+}
+
+void SavePVC() {
 	GotoXY(70, 5);
 	cout << "Nhap ten file de luu: ";
 	cin >> filename;
@@ -25,7 +57,6 @@ void Save() {
 	SaveGame << x1 << " " << win1 << " " << " " << lose1 << " " << draw1 << endl;
 	SaveGame << player2 << endl;
 	SaveGame << x2 << " " << win2 << " " << lose2 << " " << draw1 << endl;
-
 	SaveGame.close();
 }
 

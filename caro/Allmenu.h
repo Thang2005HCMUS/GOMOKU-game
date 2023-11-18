@@ -38,8 +38,16 @@ void Help() {
 	cout << "-Press Space to tick";
 	GotoXY(37, 17);
 	cout << "Play PVC";
-	GotoXY(10, 19);
-	cout << ".............";
+	GotoXY(31, 19);
+	cout << "-Press W to move up";
+	GotoXY(31, 20);
+	cout << "-Press S to move down";
+	GotoXY(31, 21);
+	cout << "-Press D to move right";
+	GotoXY(31, 22);
+	cout << "-Press A to move left";
+	GotoXY(31, 23);
+	cout << "-Press Enter to tick";
 	GotoXY(27, 30);
 	cout << "<-----Press Esc to quit----->";
 	

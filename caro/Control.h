@@ -169,7 +169,7 @@ void PlayPVP() {
 			x2 = 0;
 		}
 		else if (_COMMAND == 60) {
-			Save();
+			SavePVP();
 			SaveFileName();
 			break;
 		}
@@ -223,6 +223,7 @@ void PlayPVP() {
 				lose1++;
 				StartGame(); PlayPVP(); break; }
 			else {
+				system("cls");
 				win1 = 0; win2 = 0;
 				lose1 = 0; lose2 = 0;
 				draw1 = 0; draw2 = 0;
@@ -252,6 +253,7 @@ void PlayPVP() {
 				lose2++;
 				StartGame(); PlayPVP();  break; }
 			else {
+				system("cls");
 				win1 = 0; win2 = 0;
 				lose1 = 0; lose2 = 0;
 				draw1 = 0; draw2 = 0;
@@ -273,24 +275,25 @@ void PlayPVC() {
 	ResetData();
 	int x, y;
 	_TURN = false;
+	bool turn = _TURN;
 	while (1) {
-		switch (_TURN) {
-		case 1:
+		if (_TURN) {
+
 			GotoXY(_X, _Y);
 			_COMMAND = toupper(_getch());
-			if (_COMMAND == 'A' ) {
+			if (_COMMAND == 'A') {
 				MoveLeft();
 				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
-			else if (_COMMAND == 'W' ) {
+			else if (_COMMAND == 'W') {
 				MoveUp();
 				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
-			else if (_COMMAND == 'S' ) {
+			else if (_COMMAND == 'S') {
 				MoveDown();
 				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
-			else if (_COMMAND == 'D' ) {
+			else if (_COMMAND == 'D') {
 				MoveRight();
 				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
@@ -303,7 +306,7 @@ void PlayPVC() {
 				break;
 			}
 			// Danh co
-			else if (_COMMAND == 13 ) {
+			else if (_COMMAND == 13) {
 				PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
 				switch (CheckBoard(_X, _Y)) {
 				case -1:
@@ -318,6 +321,13 @@ void PlayPVC() {
 					cout << "Step:" << x1 << " ";
 					GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
 					cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+
+					GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+					cout << "Player2: " << player2;
+					GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+					cout << "Step:" << x2 << " ";
+					GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+					cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 					x = _X;
 					y = _Y;
 					_TURN = false;
@@ -329,11 +339,11 @@ void PlayPVC() {
 				StartGame();
 				x1 = 0;
 				x2 = 0;
-				_TURN = false;
+				_TURN = turn;
 			}
 			//SAVE
 			else if (_COMMAND == 60) {
-				Save();
+				SavePVC();
 				SaveFileName();
 				break;
 			}
@@ -386,13 +396,23 @@ void PlayPVC() {
 						}
 					}
 				}
-				if(x1>0) x1--;
+				if (x1 > 0) x1--;
+
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
 				cout << "Player1: " << player1;
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 				cout << "Step:" << x1 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
 				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+				//xoa luon quan o da danh
+
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -409,10 +429,12 @@ void PlayPVC() {
 						}
 					}
 				}
+				if (x2 >= 0) x2--;
 				_TURN = true;
 			}
-			break;
-		case 0: 
+			
+		}
+		if (!_TURN) {
 			int dem = 0;
 			for (int i = 0; i < BOARD_SIZE; i++) {
 				for (int j = 0; j < BOARD_SIZE; j++) {
@@ -428,6 +450,7 @@ void PlayPVC() {
 				GotoXY(_X, _Y);
 				SetColor(15, 2);
 				cout << "O";
+				x2++;
 				_TURN = true;
 			}
 			else {
@@ -437,12 +460,12 @@ void PlayPVC() {
 				GotoXY(_X, _Y);
 				SetColor(15, 2);
 				cout << "O";
+				x2++;
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
-				
+
 				_TURN = true;
 			}
-			break;
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
 			x1 = 0;
@@ -464,7 +487,7 @@ void PlayPVC() {
 			if (_COMMAND == 'Y') {
 				win2++;
 				lose1++;
-				StartGame(); PlayPVP(); break;
+				StartGame(); PlayPVC(); break;
 			}
 			else {
 				win1 = 0; win2 = 0;
@@ -494,7 +517,7 @@ void PlayPVC() {
 			if (_COMMAND == 'Y') {
 				win1++;
 				lose2++;
-				StartGame(); PlayPVP();  break;
+				StartGame(); PlayPVC();  break;
 			}
 			else {
 				win1 = 0; win2 = 0;
@@ -511,8 +534,9 @@ void PlayPVC() {
 
 void Newgame() {
 	system("cls");
-	Remote_Graphic();
+	XO_Graphic();
 	menu_display();
+	Remote_Graphic();
 	int s[2] = { 4,0 };
 	int getkey = -1;
 	int count = 1;
@@ -539,6 +563,7 @@ void Newgame() {
 		if (getkey == 13) {
 			if (count == 1) {
 				system("cls");
+				Remote_Graphic();
 				GotoXY(20, 10);
 				cout << "Player1 name: ";
 				getline(cin, player1);
@@ -553,6 +578,11 @@ void Newgame() {
 			}
 			if (count == 2) {
 				system("cls");
+				GotoXY(20, 10);
+				SetColor(15,0);
+				cout << "Player name: ";
+				getline(cin, player1);
+				player2 = "COMPUTER";
 				StartGame();
 				PlayPVC();
 				system("cls");
