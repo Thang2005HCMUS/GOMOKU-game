@@ -10,7 +10,7 @@
 using namespace std;
 
 void SavePVP() {
-	GotoXY(70, 5);
+	GotoXY(78, 5);
 	cout << "Nhap ten file de luu: ";
 	cin >> filename;
 	ofstream SaveGame(filename);
@@ -27,8 +27,6 @@ void SavePVP() {
 	if (player1 != "") {
 		SaveGame << player1 << endl;
 	}
-
-
 	SaveGame << x1 << " " << win1 << " " << " " << lose1 << " " << draw1 << endl;
 	if (player2 == "") {
 		SaveGame << " ";
@@ -38,11 +36,14 @@ void SavePVP() {
 		SaveGame << player2 << endl;
 	}
 	SaveGame << x2 << " " << win2 << " " << lose2 << " " << draw1 << endl;
+	SaveGame << "PVP";
 	SaveGame.close();
 }
 
+
+
 void SavePVC() {
-	GotoXY(70, 5);
+	GotoXY(78, 5);
 	cout << "Nhap ten file de luu: ";
 	cin >> filename;
 	ofstream SaveGame(filename);
@@ -52,11 +53,23 @@ void SavePVC() {
 		}
 		SaveGame << endl;
 	}
-	SaveGame << player1;
-	SaveGame << endl;
+	if (player1 == "") {
+		SaveGame << " ";
+		SaveGame << endl;
+	}
+	if (player1 != "") {
+		SaveGame << player1 << endl;
+	}
 	SaveGame << x1 << " " << win1 << " " << " " << lose1 << " " << draw1 << endl;
-	SaveGame << player2 << endl;
+	if (player2 == "") {
+		SaveGame << " ";
+		SaveGame << endl;
+	}
+	if (player2 != "") {
+		SaveGame << player2 << endl;
+	}
 	SaveGame << x2 << " " << win2 << " " << lose2 << " " << draw1 << endl;
+	SaveGame << "PVC";
 	SaveGame.close();
 }
 
@@ -71,10 +84,29 @@ void Load() {
 			LoadGame >> _A[i][j].c;
 		}
 	}
-	LoadGame >> player1;
-	LoadGame >> x1; LoadGame >> win1; LoadGame >> lose1; LoadGame >> draw1;
-	LoadGame >> player2;
-	LoadGame >> x2; LoadGame >> win2; LoadGame >> lose2; LoadGame >> draw2;
+	if (player1 == "" and player2=="") {
+		LoadGame >> x1; LoadGame >> win1; LoadGame >> lose1; LoadGame >> draw1;
+		LoadGame >> x2; LoadGame >> win2; LoadGame >> lose2; LoadGame >> draw2;
+
+	}
+	if (player2 == "" and player1!="") {
+		LoadGame >> player1;
+		LoadGame >> x1; LoadGame >> win1; LoadGame >> lose1; LoadGame >> draw1;
+		LoadGame >> x2; LoadGame >> win2; LoadGame >> lose2; LoadGame >> draw2;
+	}
+	if (player1 == "" and player2 != "") {
+		LoadGame >> x1; LoadGame >> win1; LoadGame >> lose1; LoadGame >> draw1;
+		LoadGame >> player2;
+		LoadGame >> x2; LoadGame >> win2; LoadGame >> lose2; LoadGame >> draw2;
+	}
+	if (player1 != "" and player2 != "") {
+		LoadGame >> player1;
+		LoadGame >> x1; LoadGame >> win1; LoadGame >> lose1; LoadGame >> draw1;
+		LoadGame >> player2;
+		LoadGame >> x2; LoadGame >> win2; LoadGame >> lose2; LoadGame >> draw2;
+	}
+	LoadGame >> option;
+	
 	LoadGame.close();
  }
 

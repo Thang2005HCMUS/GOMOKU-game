@@ -23,6 +23,7 @@ int _COMMAND;
 int _X;
 int _Y;
 string filename;
+string option;
 string player1;
 string player2;
 int x1 = 0;
@@ -38,6 +39,16 @@ void FixConsoleWindow() {
 	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
 	SetWindowLong(consoleWindow, GWL_STYLE, style);
 
+}
+
+void SetWindowSize(SHORT width, SHORT height){
+	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	SMALL_RECT WindowSize;
+	WindowSize.Top = 0;
+	WindowSize.Left = 0;
+	WindowSize.Right = width;
+	WindowSize.Bottom = height;
+	SetConsoleWindowInfo(hStdout, 1, &WindowSize);
 }
 
 void Nocursortype()
@@ -157,7 +168,7 @@ void DrawBoard(int _size, int _top, int _left) {
 		else if (i == _left + 4 * _size + 60) putchar(187);
 		else putchar(205);
 	}
-	for (int i = 3; i <= 8; i++)
+	for (int i = 3; i <= 6; i++)
 	{
 		GotoXY(_left + 4 * _size + 15, i); putchar(186);
 		GotoXY(_left + 4 * _size + 60, i); putchar(186);
@@ -181,7 +192,7 @@ void ResetData() {
 			
 		}
 	}
-	_TURN = true; _COMMAND = -1; // Gán lượt và phím mặc định
+	_COMMAND = -1; // Gán phím mặc định
 	_X = _A[0][0].x; _Y = _A[0][0].y; // Thiết lập lại tọa độ hiện hành ban đầu
 }
 
@@ -191,8 +202,8 @@ int CheckBoard(int pX, int pY) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (_A[i][j].x == pX && _A[i][j].y == pY && _A[i][j].c == 0) {
 				if (_TURN == true) //Lượt của người 1 
-					_A[i][j].c = -1; //c= -1 tức là người 1
-				else _A[i][j].c = 1; //c=1 tức là người chơi
+					_A[i][j].c = -1; //c= -1 tức là X
+				else _A[i][j].c = 1; //c=1 tức là O
 				return _A[i][j].c;
 			}
 		}
