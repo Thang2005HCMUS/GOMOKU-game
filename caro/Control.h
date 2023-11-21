@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include<iostream>
-#include<Windows.h>
 #include"View.h"
 #include<conio.h>
 #include"Allmenu.h"
@@ -38,10 +37,12 @@ void MoveUp() {
 }
 
 void PlayPVP() {
+	bool turn = _TURN;
 	vector<int> mapx;
 	vector<int> mapy;
 	UnNocursortype();
 	GotoXY(_X, _Y);
+	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 	cout << "Player2: " << player2;
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
@@ -49,7 +50,7 @@ void PlayPVP() {
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
 	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 
-	
+	SetColor(15, 5);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
 	cout << "Player1: " << player1;
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
@@ -130,6 +131,7 @@ void PlayPVP() {
 			switch (CheckTick(mapx[mapx.size() - 1], mapy[mapy.size() - 1])) {
 			case 1:
 				x2--;
+				SetColor(15, 2);
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 				cout << "Player2: " << player2;
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
@@ -156,6 +158,7 @@ void PlayPVP() {
 				break;
 			case -1:
 				x1--;
+				SetColor(15, 5);
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
 				cout << "Player1: " << player1;
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
@@ -188,6 +191,7 @@ void PlayPVP() {
 			StartGame();
 			x1 = 0;
 			x2 = 0;
+			_TURN = turn;
 		}
 		else if (_COMMAND == 60) {
 			SavePVP();
@@ -196,7 +200,7 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 61) {
 			GotoXY(78, 5);
-			cout << "Nhap ten file muon choi: ";
+			cout << "Enter the file name you want to play: ";
 			
 			cin >> filename;
 			Load();
@@ -222,8 +226,9 @@ void PlayPVP() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -256,8 +261,9 @@ void PlayPVP() {
 			}	
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -291,8 +297,9 @@ void PlayPVP() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			GotoXY(80, 25); cout << "Hoa!";  break;
 		}
 	}
@@ -305,9 +312,8 @@ void PlayPVC() {
 	UnNocursortype();
 	GotoXY(_X, _Y);
 	ResetData();
-	if (_TURN == false) x2 = 1;
-
 	bool turn = _TURN;
+	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 	cout << "Player2: " << player2;
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
@@ -315,13 +321,14 @@ void PlayPVC() {
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
 	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 
-
+	SetColor(15, 5);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
 	cout << "Player1: " << player1;
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 	cout << "Step:" << x1 << " ";
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
 	cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+	SetColor(15, 0);
 	while (1) {
 		if (_TURN) {
 
@@ -361,13 +368,14 @@ void PlayPVC() {
 					mapx.push_back(_X);
 					mapy.push_back(_Y);
 					x1++;//tang diem 
+					SetColor(15, 5);
 					GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
 					cout << "Player1: " << player1;
 					GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 					cout << "Step:" << x1 << " ";
 					GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
 					cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
-
+					SetColor(15, 2);
 					GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 					cout << "Player2: " << player2;
 					GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
@@ -394,7 +402,7 @@ void PlayPVC() {
 			//LOAD
 			else if (_COMMAND == 61) {
 				GotoXY(78, 5);
-				cout << "Nhap ten file muon choi ";
+				cout << "Enter the file name you want to play ";
 	
 				cin >> filename;
 				Load();
@@ -408,10 +416,12 @@ void PlayPVC() {
 						if (_A[i][j].c == -1) {
 							SetColor(15, 5);
 							cout << "X";
+							SetColor(15, 2);
 						}
 						if (_A[i][j].c == 1) {
 							SetColor(15, 2);
 							cout << "O";
+							SetColor(15, 5);
 						}
 						if (_A[i][j].c == 0) {
 							cout << " ";
@@ -440,22 +450,7 @@ void PlayPVC() {
 					}
 				}
 				if (x1 > 0) x1--;
-
-				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
-				cout << "Player1: " << player1;
-				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
-				cout << "Step:" << x1 << " ";
-				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
-
-				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
-				cout << "Player2: " << player2;
-				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
-				cout << "Step:" << x2 << " ";
-				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				//xoa luon quan o da danh
-
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -473,14 +468,28 @@ void PlayPVC() {
 					}
 				}
 				if (x2 >= 1) x2--;
+				SetColor(15, 5);
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
+				cout << "Player1: " << player1;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
+				cout << "Step:" << x1 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+				SetColor(15, 2);
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				_TURN = true;
 			}
-			
 		}
 		//kiem tra khi player danh
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -512,8 +521,9 @@ void PlayPVC() {
 			}
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -546,8 +556,9 @@ void PlayPVC() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			GotoXY(80, 25); cout << "Hoa!";  break;
 		}
 		if (!_TURN) {
@@ -566,8 +577,14 @@ void PlayPVC() {
 				CheckBoard(_X, _Y);
 				x2++;
 				cout << "O";
+				SetColor(15, 2);
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				_TURN = true;
-
 			}
 			else if (dem == BOARD_SIZE * BOARD_SIZE) {
 				_X = (BOARD_SIZE * 4 / 2) - 3;
@@ -577,6 +594,13 @@ void PlayPVC() {
 				SetColor(15, 2);
 				cout << "O";
 				x2++;
+				SetColor(15, 2);
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				_TURN = true;
 			}
 
@@ -588,6 +612,13 @@ void PlayPVC() {
 				SetColor(15, 2);
 				cout << "O";
 				x2++;
+				SetColor(15, 2);
+				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+				cout << "Player2: " << player2;
+				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+				cout << "Step:" << x2 << " ";
+				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
 
@@ -596,8 +627,9 @@ void PlayPVC() {
 		}
 		// kiem tra sau khi computer danh
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -629,8 +661,9 @@ void PlayPVC() {
 			}
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -665,8 +698,9 @@ void PlayPVC() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
-			if (_TURN == true) _TURN = false;
+			if (turn == true) _TURN = false;
 			else _TURN = true;
+			turn = _TURN;
 			  break;
 		}
 	}

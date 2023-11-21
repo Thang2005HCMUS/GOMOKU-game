@@ -11,7 +11,7 @@ using namespace std;
 
 void SavePVP() {
 	GotoXY(78, 5);
-	cout << "Nhap ten file de luu: ";
+	cout << "Enter a file name to save: ";
 	cin >> filename;
 	ofstream SaveGame(filename);
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -44,7 +44,7 @@ void SavePVP() {
 
 void SavePVC() {
 	GotoXY(78, 5);
-	cout << "Nhap ten file de luu: ";
+	cout << "Enter a file name to save: ";
 	cin >> filename;
 	ofstream SaveGame(filename);
 	for (int i = 0; i < BOARD_SIZE; i++) {
