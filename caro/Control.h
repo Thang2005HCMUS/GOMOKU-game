@@ -125,7 +125,6 @@ void PlayPVP() {
 				mapy.push_back(_Y);
 				break;
 			}
-
 		}
 		else if (_COMMAND == 62 && mapx.size() > 0 && mapy.size() > 0) {
 			switch (CheckTick(mapx[mapx.size() - 1], mapy[mapy.size() - 1])) {
@@ -223,6 +222,8 @@ void PlayPVP() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -255,6 +256,8 @@ void PlayPVP() {
 			}	
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -288,6 +291,8 @@ void PlayPVP() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			GotoXY(80, 25); cout << "Hoa!";  break;
 		}
 	}
@@ -474,6 +479,8 @@ void PlayPVC() {
 		}
 		//kiem tra khi player danh
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -505,6 +512,8 @@ void PlayPVC() {
 			}
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -537,6 +546,8 @@ void PlayPVC() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			GotoXY(80, 25); cout << "Hoa!";  break;
 		}
 		if (!_TURN) {
@@ -585,6 +596,8 @@ void PlayPVC() {
 		}
 		// kiem tra sau khi computer danh
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -592,6 +605,7 @@ void PlayPVC() {
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
+			Nocursortype();
 			while (1) {
 				if (_kbhit()) {
 					break;
@@ -615,6 +629,8 @@ void PlayPVC() {
 			}
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -622,6 +638,7 @@ void PlayPVC() {
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
+			Nocursortype();
 			while (1) {
 
 				if (_kbhit()) {
@@ -636,7 +653,9 @@ void PlayPVC() {
 			if (_COMMAND == 'Y') {
 				win1++;
 				lose2++;
-				StartGame(); PlayPVC();  break;
+				StartGame(); 
+				PlayPVC(); 
+				break;
 			}
 			else {
 				win1 = 0; win2 = 0;
@@ -646,6 +665,8 @@ void PlayPVC() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
+			if (_TURN == true) _TURN = false;
+			else _TURN = true;
 			  break;
 		}
 	}
@@ -722,11 +743,11 @@ void Newgame() {
 					}
 					if (getkey1 == 13) {
 						if (count1 == 1) {
-							_TURN == true;
+							_TURN = true;
 							break;
 						}
 						if (count1 == 2) {
-							_TURN == false;
+							_TURN = false;
 							break;
 						}
 					}
@@ -743,7 +764,6 @@ void Newgame() {
 				PlayPVP();
 				system("cls");
 				break;
-				
 			}
 			if (count == 2) {
 				system("cls");
@@ -777,12 +797,12 @@ void Newgame() {
 					}
 					if (getkey2 == 13) {
 						if (count2 == 1) {
-							_TURN == false;
+							_TURN = true;
 							break;
 
 						}
 						if (count2 == 2) {
-							_TURN == true;
+							_TURN = false;
 							break;
 						}
 					}
