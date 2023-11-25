@@ -462,3 +462,158 @@ void listgame_Graphic() {
 	HighLight(22, 15, 2, 1, 0);
 
 }
+
+void draw() {
+	//D
+	HighLight(67, 6, 2, 7, 0);
+	HighLight(67, 5, 8, 1, 0);
+	HighLight(67, 12, 8, 1, 0);
+	HighLight(74, 6, 2, 1, 0);
+	HighLight(75, 7, 2, 4, 0);
+	HighLight(74, 11, 2, 1, 0);
+
+	HighLight(66, 5, 1, 8, 11);
+	HighLight(74, 7, 1, 4, 11);
+	HighLight(73, 6, 1, 1, 11);
+	HighLight(73, 11, 1, 1, 11);
+
+	HighLight(69, 6, 1, 6, 4);
+	HighLight(77, 7, 1, 4, 4);
+	HighLight(76, 6, 1, 1, 4);
+	HighLight(75, 5, 1, 1, 4);
+	HighLight(76, 11, 1, 1, 4);
+	HighLight(75, 12, 1, 1, 4);
+
+
+
+	// R (black)
+	for (int i = 0; i <= 7; i++) {
+
+		HighLight(81, 12 - i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 6; i++) {
+
+		HighLight(81 + i, 5, 2, 1, 0);
+	}
+	HighLight(86, 6, 2, 1, 0);
+	HighLight(88, 6, 2, 1, 0);
+	HighLight(88, 7, 2, 1, 0);
+	HighLight(87, 8, 2, 1, 0);
+	HighLight(88, 11, 2, 1, 0);
+	HighLight(87, 10, 2, 1, 0);
+	for (int i = 0; i <= 5; i++) {
+
+		HighLight(81 + i, 9, 2, 1, 0);
+	}
+	HighLight(86, 10, 2, 1, 0);
+	HighLight(87, 11, 2, 1, 0);
+	HighLight(88, 12, 2, 1, 0);
+	// R(blue)
+	for (int i = 0; i <= 7; i++)
+	{
+		HighLight(80, 5 + i, 1, 1, 11);
+	}
+	HighLight(86, 6, 1, 1, 11);
+	HighLight(87, 7, 1, 1, 11);
+	HighLight(86, 8, 1, 1, 11);
+	HighLight(85, 10, 1, 1, 11);
+	HighLight(86, 11, 1, 1, 11);
+	HighLight(87, 12, 1, 1, 11);
+	// R(red)
+	for (int i = 0; i <= 6; i++)
+	{
+		if (i == 3) {
+			continue;
+		}
+		HighLight(83, 6 + i, 1, 1, 4);
+	}
+	HighLight(89, 5, 1, 1, 4);
+	HighLight(90, 6, 1, 1, 4);
+	HighLight(90, 7, 1, 1, 4);
+	HighLight(89, 8, 1, 1, 4);
+	HighLight(88, 9, 1, 1, 4);
+	HighLight(89, 10, 1, 1, 4);
+	HighLight(90, 11, 1, 1, 4);
+	HighLight(90, 12, 1, 1, 4);
+
+	//W
+	HighLight(108, 5, 2, 4, 0);
+	HighLight(107, 5, 1, 4, 11);
+	HighLight(110, 5, 1, 4, 4);
+
+	HighLight(124, 5, 2, 4, 0);
+	HighLight(123, 5, 1, 4, 11);
+	HighLight(126, 5, 1, 4, 4);
+
+	for (int i = 0; i <= 3; i++) {
+		HighLight(108 + i, 9 + i, 2, 1, 0);
+		HighLight(107 + i, 9 + i, 1, 1, 11);
+		HighLight(110 + i, 9 + i, 1, 1, 4);
+
+		HighLight(124 - i, 9 + i, 2, 1, 0);
+		HighLight(123 - i, 9 + i, 1, 1, 11);
+		HighLight(126 - i, 9 + i, 1, 1, 4);
+
+	}
+	for (int i = 0; i <= 2; i++) {
+		HighLight(117 + i, 9 + i, 2, 1, 0);
+		HighLight(116 + i, 9 + i, 1, 1, 11);
+		HighLight(119 + i, 9 + i, 1, 1, 4);
+
+		HighLight(115 - i, 9 + i, 2, 1, 0);
+		HighLight(114 - i, 9 + i, 1, 1, 11);
+		if (i != 0) {
+			HighLight(117 - i, 9 + i, 1, 1, 4);
+		}
+	}
+	//chu A
+	for (int i = 0; i <= 5; i++) {
+
+		HighLight(94, 12 - i, 2, 1, 0);
+	}
+	HighLight(95, 6, 2, 1, 0);
+	for (int i = 0; i <= 4; i++) {
+
+		HighLight(96 + i, 5, 2, 1, 0);
+	}
+	HighLight(101, 6, 2, 1, 0);
+	for (int i = 0; i <= 5; i++) {
+
+		HighLight(102, 12 - i, 2, 1, 0);
+	}
+	for (int i = 0; i <= 4; i++) {
+
+		HighLight(96 + i, 9, 2, 1, 0);
+	}
+	// chu A (blue)
+	for (int i = 0; i <= 5; i++)
+	{
+		HighLight(93, 7 + i, 1, 1, 11);
+	}
+	for (int i = 0; i <= 5; i++)
+	{
+		if (i == 2) {
+			continue;
+		}
+		HighLight(101, 7 + i, 1, 1, 11);
+	}
+	HighLight(100, 6, 1, 1, 11);
+	HighLight(94, 6, 1, 1, 11);
+	HighLight(95, 5, 1, 1, 11);
+	//chu A( red) 
+	for (int i = 0; i <= 5; i++)
+	{
+		HighLight(104, 7 + i, 1, 1, 4);
+	}
+	for (int i = 0; i <= 5; i++)
+	{
+		if (i == 2) {
+			continue;
+		}
+		HighLight(96, 7 + i, 1, 1, 4);
+	}
+	HighLight(103, 6, 1, 1, 4);
+	HighLight(97, 6, 1, 1, 4);
+	HighLight(102, 5, 1, 1, 4);
+
+}

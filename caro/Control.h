@@ -6,7 +6,10 @@
 #include<vector>
 #include"Model.h"
 #include"Graphics.h"
+
 using namespace std;
+
+void PlayPVC();
 
 void MoveRight() {
 	if (_X < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].x) {
@@ -195,40 +198,22 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 60) {
 			SavePVP();
+			option = "  (PVP)";
 			SaveFileName();
 			break;
 		}
 		else if (_COMMAND == 61) {
 			GotoXY(78, 5);
 			cout << "Enter the file name you want to play: ";
-			
 			cin >> filename;
 			Load();
-			system("cls");
-			DrawBoard(BOARD_SIZE, TOP, LEFT);
-			for (int i = 0; i < BOARD_SIZE; i++) {
-				for (int j = 0; j < BOARD_SIZE; j++) {
-					_X = _A[i][j].x;
-					_Y = _A[i][j].y;
-					GotoXY(_X, _Y);
-					if (_A[i][j].c == -1) {
-						SetColor(15, 5);
-						cout << "X";
-					}
-					if (_A[i][j].c == 1) {
-						SetColor(15, 2);
-						cout << "O";
-					}
-					if (_A[i][j].c == 0) {
-						cout << " ";
-					}
-				}
+			if (option == "PVC") {
+				PlayPVC();
+				system("cls");
+				break;
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
-			if (turn == true) _TURN = false;
-			else _TURN = true;
-			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -238,10 +223,12 @@ void PlayPVP() {
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
 			SetColor(15, 0);
 			Nocursortype();
+			srand(time(0));
 			while (1) {
 				if (_kbhit()) {
 					break;
 				}
+				
 				SetColor(15, rand() % 15 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
@@ -261,9 +248,6 @@ void PlayPVP() {
 			}	
 		}
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
-			if (turn == true) _TURN = false;
-			else _TURN = true;
-			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
 			HighLight(65, 0, 60, 30, 15);
@@ -273,8 +257,8 @@ void PlayPVP() {
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
 			SetColor(15, 0);
 			Nocursortype();
+			srand(time(0));
 			while (1) {
-				
 				if (_kbhit()) {
 					break;
 				}
@@ -297,10 +281,21 @@ void PlayPVP() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
-			if (turn == true) _TURN = false;
-			else _TURN = true;
-			turn = _TURN;
-			GotoXY(80, 25); cout << "Hoa!";  break;
+			x1 = 0;
+			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
+			draw();
+			SetColor(15, 4);
+			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
+			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
+			_COMMAND = toupper(_getch());
+			if (_COMMAND == 'Y') {
+				draw1++;
+				draw2++;
+				StartGame(); PlayPVP();  break;
+
+			}
+			else break;
 		}
 	}
 
@@ -311,7 +306,6 @@ void PlayPVC() {
 	vector<int> mapy;
 	UnNocursortype();
 	GotoXY(_X, _Y);
-	ResetData();
 	bool turn = _TURN;
 	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
@@ -396,38 +390,17 @@ void PlayPVC() {
 			//SAVE
 			else if (_COMMAND == 60) {
 				SavePVC();
+				option = "  (PVC)";
 				SaveFileName();
 				break;
 			}
 			//LOAD
 			else if (_COMMAND == 61) {
 				GotoXY(78, 5);
-				cout << "Enter the file name you want to play ";
-	
+				cout << "Enter the file name you want to play: ";
 				cin >> filename;
 				Load();
-				system("cls");
-				DrawBoard(BOARD_SIZE, TOP, LEFT);
-				for (int i = 0; i < BOARD_SIZE; i++) {
-					for (int j = 0; j < BOARD_SIZE; j++) {
-						_X = _A[i][j].x;
-						_Y = _A[i][j].y;
-						GotoXY(_X, _Y);
-						if (_A[i][j].c == -1) {
-							SetColor(15, 5);
-							cout << "X";
-							SetColor(15, 2);
-						}
-						if (_A[i][j].c == 1) {
-							SetColor(15, 2);
-							cout << "O";
-							SetColor(15, 5);
-						}
-						if (_A[i][j].c == 0) {
-							cout << " ";
-						}
-					}
-				}
+				
 			}
 			//UNDO
 			else if (_COMMAND == 62 && mapx.size() > 0 && mapy.size() > 0) {
@@ -499,6 +472,7 @@ void PlayPVC() {
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
 			Nocursortype();
 			while (1) {
+				
 				if (_kbhit()) {
 					break;
 				}
@@ -533,7 +507,7 @@ void PlayPVC() {
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
 			Nocursortype();
 			while (1) {
-
+				
 				if (_kbhit()) {
 					break;
 				}
@@ -556,10 +530,21 @@ void PlayPVC() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
-			if (turn == true) _TURN = false;
-			else _TURN = true;
-			turn = _TURN;
-			GotoXY(80, 25); cout << "Hoa!";  break;
+			x1 = 0;
+			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
+			draw();
+			SetColor(15, 4);
+			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
+			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
+			_COMMAND = toupper(_getch());
+			if (_COMMAND == 'Y') {
+				draw1++;
+				draw2++;
+				StartGame(); PlayPVP();  break;
+
+			}
+			else break;
 		}
 		if (!_TURN) {
 			
@@ -603,7 +588,6 @@ void PlayPVC() {
 				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
 				_TURN = true;
 			}
-
 			else {
 				_X = Tim_Kiem_NuocDi().x;
 				_Y = Tim_Kiem_NuocDi().y;
@@ -639,6 +623,7 @@ void PlayPVC() {
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
 			Nocursortype();
 			while (1) {
+				
 				if (_kbhit()) {
 					break;
 				}
@@ -673,7 +658,7 @@ void PlayPVC() {
 			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
 			Nocursortype();
 			while (1) {
-
+				
 				if (_kbhit()) {
 					break;
 				}
@@ -698,10 +683,21 @@ void PlayPVC() {
 			}
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
-			if (turn == true) _TURN = false;
-			else _TURN = true;
-			turn = _TURN;
-			  break;
+			x1 = 0;
+			x2 = 0;
+			HighLight(65, 0, 60, 30, 15);
+			draw();
+			SetColor(15, 4);
+			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
+			GotoXY(85, 26); cout << "PRESS ANY KEY TO OUT!";
+			_COMMAND = toupper(_getch());
+			if (_COMMAND == 'Y') {
+				draw1++;
+				draw2++;
+				StartGame(); PlayPVP();  break;
+
+			}
+			else break;
 		}
 	}
 }
@@ -747,16 +743,18 @@ void Newgame() {
 			break;
 		}
 		if (getkey == 13) {
+			
 			if (count == 1) {
 				system("cls");
 				Remote_Graphic();
 				GotoXY(20, 10);
+				UnNocursortype();
 				cout << "Player1 name: ";
-				getline(cin, player1);
+				cin >> player1;
 				GotoXY(20, 12);
 				cout << "Player2 name: ";
-				getline(cin, player2);
-				
+				cin >> player2;
+				Nocursortype();
 				while (1) {
 					SetColor(15, ss[0]);
 					GotoXY(20, 16);
@@ -804,9 +802,11 @@ void Newgame() {
 				Remote_Graphic();
 				GotoXY(20, 10);
 				SetColor(15,0);
+				UnNocursortype();
 				cout << "Player name: ";
-				getline(cin, player1);
+				cin >> player1;
 				player2 = "COMPUTER";
+				Nocursortype();
 				while (1) {
 					SetColor(15, sss[0]);
 					GotoXY(20, 16);
@@ -878,9 +878,27 @@ void LoadGame() {
 
 	ifstream SaveName("filename.txt");
 	string read;
+	string op;
 	while (getline(SaveName, read)) {
+		ifstream Option;
+		Option.open(read);
+		Option >> _TURN;
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				Option >> _A[i][j].c;
+			}
+		}
+		Option >> player1;
+		Option >> x1; Option >> win1; Option >> lose1; Option >> draw1;
+		Option >> player2;
+		Option >> x2; Option >> win2; Option >> lose2; Option >> draw2;
+
+		Option >> option;
+		Option.close();
 		GotoXY(50, 6 + line);
 		cout << "-" << read;
+		GotoXY(73, 6 + line);
+		cout << "(" << option << ")";
 		line++;
 	}
 	SaveName.close();
@@ -895,44 +913,24 @@ void LoadGame() {
 		if (read1 == name) {
 			filename = name;
 			system("cls");
-			ResetData();
-			DrawBoard(BOARD_SIZE, TOP, LEFT);
 			Load();
-			for (int i = 0; i < BOARD_SIZE; i++) {
-				for (int j = 0; j < BOARD_SIZE; j++) {
-					_X = _A[i][j].x;
-					_Y = _A[i][j].y;
-					GotoXY(_X, _Y);
-					if (_A[i][j].c == -1) {
-						SetColor(15, 5);
-						cout << "X";
-						_TURN = false;
-					}
-					if (_A[i][j].c == 1) {
-						SetColor(15, 2);
-						cout << "O";
-						_TURN = true;
-
-					}
-					if (_A[i][j].c == 0) {
-						cout << " ";
-					}
-				}
-			}
 			_X = _A[0][0].x; _Y = _A[0][0].y;
-
 			if (option == "PVP") {
 				PlayPVP();
+				system("cls");
+				break;
 			}
 			else if (option == "PVC") {
 				PlayPVC();
+				system("cls");
+				break;
 			}
 		}
 		else callfail++;
 	}
 	if (callfail == countall) {
 		system("cls");
-		GotoXY(55, 20);
+		GotoXY(55, 17);
 		cout << "FILE NOT EXIT!";
 		Sleep(2000);
 		system("cls");
@@ -941,13 +939,12 @@ void LoadGame() {
 }
 
 
-
 void Menu() {
 	system("cls");
 	Background();
 	HighLight(0, 0, 0, 0, 0);
 	
-	int set[] = { 4,0,0,0,0 };
+	int set[] = { 4,0,0,0,0,0 };
 	char key;
 	int counter = 1;
 	while (1) {

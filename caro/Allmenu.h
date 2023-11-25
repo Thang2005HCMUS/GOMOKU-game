@@ -6,6 +6,7 @@
 #include<Windows.h>
 #include<string>
 #include<fstream>
+#include"Graphics.h"
 
 using namespace std;
 
@@ -83,6 +84,8 @@ void About() {
 	}
 	system("cls");
 }
+
+
 
 
 

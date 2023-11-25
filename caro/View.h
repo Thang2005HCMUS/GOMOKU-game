@@ -22,14 +22,15 @@ bool _TURN;
 int _COMMAND;
 int _X;
 int _Y;
-string filename;
-string option;
-string player1;
-string player2;
+string filename="";
+string option="";
+string player1="";
+string player2="";
 int x1 = 0;
 int x2 = 0;
 int win1 = 0, lose1 = 0, draw1 = 0;
 int win2 = 0, lose2 = 0, draw2 = 0;
+bool sound = true;
 
 
 
@@ -83,7 +84,8 @@ void SetColor(int backgound_color, int text_color) {
 }
 
 
-void Background() {
+void Background() 
+{
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD coord = { 0, 0 };
 	DWORD count;
