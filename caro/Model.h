@@ -59,7 +59,7 @@ void SavePVC() {
 void Load() {
 	ResetData();
 	
-	fstream LoadGame;
+	ifstream LoadGame;
 	LoadGame.open(filename);
 	LoadGame >> _TURN;
 	for (int i = 0; i < BOARD_SIZE; i++) {

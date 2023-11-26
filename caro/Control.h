@@ -11,6 +11,7 @@ using namespace std;
 
 void PlayPVC();
 
+
 void MoveRight() {
 	if (_X < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].x) {
 		_X += 4;
@@ -198,7 +199,6 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 60) {
 			SavePVP();
-			option = "  (PVP)";
 			SaveFileName();
 			break;
 		}
@@ -206,12 +206,26 @@ void PlayPVP() {
 			GotoXY(78, 5);
 			cout << "Enter the file name you want to play: ";
 			cin >> filename;
-			Load();
+			ifstream check;
+			check.open("filename.txt");
+			string read;
+			while (getline(check, read)) {
+				if (filename == read) {
+					GotoXY(78, 5);
+					cout << "                                           ";
+					Load();
+				}
+			}
 			if (option == "PVC") {
 				PlayPVC();
-				system("cls");
 				break;
 			}
+			else {
+				GotoXY(78, 5);
+				cout << "                                           ";
+			}
+			check.close();
+			
 		}
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
 			x1 = 0;
@@ -390,7 +404,7 @@ void PlayPVC() {
 			//SAVE
 			else if (_COMMAND == 60) {
 				SavePVC();
-				option = "  (PVC)";
+				
 				SaveFileName();
 				break;
 			}
@@ -399,8 +413,27 @@ void PlayPVC() {
 				GotoXY(78, 5);
 				cout << "Enter the file name you want to play: ";
 				cin >> filename;
-				Load();
-				
+				ifstream check;
+				check.open("filename.txt");
+				string read;
+				while (getline(check, read)) {
+					if (filename == read) {
+						GotoXY(78, 5);
+						cout << "                                           ";
+						Load();
+					}
+				}
+				if (option == "PVC") {
+					PlayPVC();
+					break;
+				}
+				else {
+					GotoXY(78, 5);
+					cout << "                                           ";
+				}
+				break;
+				check.close();
+					
 			}
 			//UNDO
 			else if (_COMMAND == 62 && mapx.size() > 0 && mapy.size() > 0) {
@@ -878,7 +911,6 @@ void LoadGame() {
 
 	ifstream SaveName("filename.txt");
 	string read;
-	string op;
 	while (getline(SaveName, read)) {
 		ifstream Option;
 		Option.open(read);
