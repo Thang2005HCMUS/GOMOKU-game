@@ -6,6 +6,15 @@
 
 using namespace std;
 
+void menu_display(); //in ra chu caro
+void Remote_Graphic();  //ve remote
+void XO_Graphic(); // ve hinh caro
+void draw();  // ve chu draw khi hoa
+void listgame_Graphic();  //ve ra hinh tap ghi chep
+void owin();  //ve ra chu owin
+void xwin();  //ve ra chu x win
+
+
 void menu_display() {
 	// C (black)
 	HighLight(35, 4, 2, 1, 0);

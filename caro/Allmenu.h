@@ -10,6 +10,9 @@
 
 using namespace std;
 
+void Help();   //in ra giao dien cua help
+void About(); //in ra dao dien cua about
+
 void Help() {
 	GotoXY(37, 3);
 	cout << "Play PVP";

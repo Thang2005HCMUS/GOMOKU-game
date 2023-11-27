@@ -10,6 +10,7 @@
 using namespace std;
 
 void main() {
+	setConsoleWindow(950, 570);
 	FixConsoleWindow();
 	Menu();
 }

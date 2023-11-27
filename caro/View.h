@@ -10,8 +10,8 @@ using namespace std;
 #define LEFT 1									 
 #define TOP 1	
 
-long long attack[7] = { 0, 9, 54, 162, 1458, 13112, 118008 };
-long long defense[7] = { 0, 3, 27, 99, 729, 6561, 59049 };
+long long attack[7] = { 0, 9, 54, 162, 1458, 13112, 118008 };// mang diem tan cong
+long long defense[7] = { 0, 3, 27, 99, 729, 6561, 59049 };//mang diem phong ngu
 
 
 struct _POINT {
@@ -32,7 +32,31 @@ int win1 = 0, lose1 = 0, draw1 = 0;
 int win2 = 0, lose2 = 0, draw2 = 0;
 bool sound = true;
 
+void FixConsoleWindow();  //co dinh man hinh console
+void setConsoleWindow(int, int);  //dat kich thuoc cho man hinh console
+void Nocursortype();   //an con tro chuot
+void UnNocursortype(); //hien thi con tro chuot
+void GotoXY(int , int);  //di chuyen den toa do (x,y) 
+void SetColor(int, int);  // ham dat mau cho chu
+void HighLight(int, int, int, int, int); //ve khoi hinh chu nhat co chieu cao h va chieu rong w tren man hinh
+void Background();  //dat man hinh nen la mau trang
+void DrawBoard(int, int, int); //ham ve bang
+void ResetData();//thiet lap du lieu cho ban co
+int CheckBoard(int , int ); //gan gia tri cho o co khi bam Enter
+void StartGame(); // ham bat dau cho choi
+int CheckTick(int, int);  //ham kiem tra gia tri o co
+int testBoard(int, int, int);  //kiem tra thang thua hoa
+void DrawLineWin(int, int); // ham hien thi chien thang
 
+long SoDiemTanCong_DuyetNgang(long, long); //tinh diem tan cong ngang
+long SoDiemTanCong_DuyetDoc(long, long);//tinh diem tan cong doc
+long SoDiemTanCong_DuyetCheo1(long, long); //tinh diem tan cong cheo phai sang trai
+long SoDiemTanCong_DuyetCheo2(long, long);//tinh diem tan cong trai sang phai
+long SoDiemPhongThu_DuyetNgang(long, long);//tinh diem phong thu ngang
+long SoDiemPhongThu_DuyetDoc(long, long);//tinh diem phong thu doc
+long SoDiemPhongThu_DuyetCheo1(long, long);//tinh diem phong thu cheo phai sang trai
+long SoDiemPhongThu_DuyetCheo2(long, long);//tinh diem phong thu cheo trai sang phai
+_POINT Tim_Kiem_NuocDi(); // lua chon nuoc di dua tren so diem da tinh
 
 void FixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
@@ -42,16 +66,14 @@ void FixConsoleWindow() {
 
 }
 
-void SetWindowSize(SHORT width, SHORT height){
-	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	SMALL_RECT WindowSize;
-	WindowSize.Top = 0;
-	WindowSize.Left = 0;
-	WindowSize.Right = width;
-	WindowSize.Bottom = height;
-	SetConsoleWindowInfo(hStdout, 1, &WindowSize);
-}
+void setConsoleWindow(int w, int h)
+{
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
 
+	MoveWindow(console, r.left, r.top, w, h, TRUE);
+}
 void Nocursortype()
 {
 	CONSOLE_CURSOR_INFO Info;

@@ -8,31 +8,34 @@
 #include"Graphics.h"
 
 using namespace std;
+void Menu();// in ra menu tren ma hinh
+void LoadGame();// che do load game da luu
+void Newgame(); //hien thi lua chon choi voi may hay choi voi nguoi
+void PlayPVC();// choi voi may
+void PlayPVP(); //ham choi voi nguoi
 
-void PlayPVC();
-
-
+//ham di chuyen sang phai
 void MoveRight() {
 	if (_X < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].x) {
 		_X += 4;
 		GotoXY(_X, _Y);
 	}
 }
-
+//ham di chuyen sang trai
 void MoveLeft() {
 	if (_X > _A[0][0].x) {
 		_X -= 4;
 		GotoXY(_X, _Y);
 	}
 }
-
+//ham si chuyen xuong
 void MoveDown() {
 	if (_Y < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].y) {
 		_Y += 2;
 		GotoXY(_X, _Y);
 	}
 }
-
+//ham di chuyen len
 void MoveUp() {
 	if (_Y > _A[0][0].y) {
 		_Y -= 2;
@@ -52,7 +55,7 @@ void PlayPVP() {
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 	cout << "Step:" << x2 << " ";
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 
 	SetColor(15, 5);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
@@ -60,7 +63,7 @@ void PlayPVP() {
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 	cout << "Step:" << x1 << " ";
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-	cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+	cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1<<" ";
 	while (1) {
 		if (_TURN == false) {
 			GotoXY(LEFT + 4 * BOARD_SIZE + 34, 3);
@@ -110,7 +113,7 @@ void PlayPVP() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 				cout<< "Step:" << x1 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1<<" ";
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
 				break;
@@ -124,7 +127,7 @@ void PlayPVP() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 				cout << "Step:" << x2 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 				_TURN = true;
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
@@ -141,7 +144,7 @@ void PlayPVP() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 				cout << "Step:" << x2 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -168,7 +171,7 @@ void PlayPVP() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 				cout << "Step:" << x1 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1<<" ";
 				GotoXY(mapx[mapx.size() - 1], mapy[mapy.size() - 1]);
 				cout << " ";
 				_X = mapx[mapx.size() - 1];
@@ -199,30 +202,37 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 60) {
 			SavePVP();
-			SaveFileName();
-			break;
 		}
 		else if (_COMMAND == 61) {
 			GotoXY(78, 5);
-			cout << "Enter the file name you want to play: ";
+			cout << "                                           ";
+			GotoXY(78, 5);
+			cout << "Enter the file name : ";
 			cin >> filename;
 			ifstream check;
 			check.open("filename.txt");
 			string read;
+			bool kt = 0;
 			while (getline(check, read)) {
 				if (filename == read) {
+					kt = 1;
 					GotoXY(78, 5);
 					cout << "                                           ";
 					Load();
 				}
 			}
-			if (option == "PVC") {
+			if (option == "PVC" and kt==1) {
+				GotoXY(LEFT + 4 * BOARD_SIZE + 34, 3);
+				cout << "               ";
 				PlayPVC();
 				break;
 			}
-			else {
+			else if(kt==0) 
+			{
 				GotoXY(78, 5);
 				cout << "                                           ";
+				GotoXY(78, 5);
+				cout << "Wrong! press F3 to try again!";
 			}
 			check.close();
 			
@@ -243,7 +253,7 @@ void PlayPVP() {
 					break;
 				}
 				
-				SetColor(15, rand() % 15 + 1);
+				SetColor(15, rand() % 7 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
 				SetColor(15, 0);
@@ -276,7 +286,7 @@ void PlayPVP() {
 				if (_kbhit()) {
 					break;
 				}
-				SetColor(15, rand() % 15 + 1);
+				SetColor(15, rand() % 7 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
 				SetColor(15, 0);
@@ -327,7 +337,7 @@ void PlayPVC() {
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 	cout << "Step:" << x2 << " ";
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 
 	SetColor(15, 5);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
@@ -335,7 +345,7 @@ void PlayPVC() {
 	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 	cout << "Step:" << x1 << " ";
 	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-	cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+	cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1<<" ";
 	SetColor(15, 0);
 	while (1) {
 		if (_TURN) {
@@ -382,14 +392,14 @@ void PlayPVC() {
 					GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 					cout << "Step:" << x1 << " ";
 					GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-					cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+					cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1<<" ";
 					SetColor(15, 2);
 					GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 					cout << "Player2: " << player2;
 					GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 					cout << "Step:" << x2 << " ";
 					GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-					cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+					cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 					_TURN = false;
 					break;
 				}
@@ -404,34 +414,39 @@ void PlayPVC() {
 			//SAVE
 			else if (_COMMAND == 60) {
 				SavePVC();
-				
-				SaveFileName();
-				break;
 			}
 			//LOAD
 			else if (_COMMAND == 61) {
 				GotoXY(78, 5);
-				cout << "Enter the file name you want to play: ";
+				cout << "                                           ";
+				GotoXY(78, 5);
+				cout << "Enter the file name : ";
 				cin >> filename;
 				ifstream check;
+				bool kt = 0;
 				check.open("filename.txt");
 				string read;
 				while (getline(check, read)) {
 					if (filename == read) {
+						kt = 1;
 						GotoXY(78, 5);
 						cout << "                                           ";
 						Load();
 					}
 				}
-				if (option == "PVC") {
-					PlayPVC();
+				if (option == "PVP" and kt==1) {
+
+					PlayPVP();
 					break;
 				}
-				else {
+				else if(kt==0)
+				{
 					GotoXY(78, 5);
 					cout << "                                           ";
+					GotoXY(78, 5);
+					cout << "Wrong! press F3 to try again!";
 				}
-				break;
+			
 				check.close();
 					
 			}
@@ -480,7 +495,7 @@ void PlayPVC() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
 				cout << "Step:" << x1 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
-				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1;
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1<<" ";
 				SetColor(15, 2);
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 				cout << "Player2: " << player2;
@@ -509,7 +524,7 @@ void PlayPVC() {
 				if (_kbhit()) {
 					break;
 				}
-				SetColor(15, rand() % 15 + 1);
+				SetColor(15, rand() % 7 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
 				SetColor(15, 0);
@@ -544,7 +559,7 @@ void PlayPVC() {
 				if (_kbhit()) {
 					break;
 				}
-				SetColor(15, rand() % 15 + 1);
+				SetColor(15, rand() % 7 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
 				SetColor(15, 0);
@@ -601,7 +616,7 @@ void PlayPVC() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 				cout << "Step:" << x2 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 				_TURN = true;
 			}
 			else if (dem == BOARD_SIZE * BOARD_SIZE) {
@@ -618,7 +633,7 @@ void PlayPVC() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 				cout << "Step:" << x2 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<<" ";
 				_TURN = true;
 			}
 			else {
@@ -635,7 +650,7 @@ void PlayPVC() {
 				GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
 				cout << "Step:" << x2 << " ";
 				GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
-				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2;
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2<< " ";
 				mapx.push_back(_X);
 				mapy.push_back(_Y);
 
@@ -660,7 +675,7 @@ void PlayPVC() {
 				if (_kbhit()) {
 					break;
 				}
-				SetColor(15, rand() % 15 + 1);
+				SetColor(15, rand() %7 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
 				SetColor(15, 0);
@@ -695,7 +710,7 @@ void PlayPVC() {
 				if (_kbhit()) {
 					break;
 				}
-				SetColor(15, rand() % 15 + 1);
+				SetColor(15, rand() % 7 + 1);
 				DrawLineWin(_X, _Y);
 				Sleep(100);
 				SetColor(15, 0);
