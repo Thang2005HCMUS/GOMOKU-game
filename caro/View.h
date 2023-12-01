@@ -238,7 +238,24 @@ int CheckBoard(int pX, int pY) {
 
 void StartGame() {
 	system("cls");
+	x1 = 0;
+	x2 = 0;
+	SetColor(15, 2);
+	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
+	cout << "Player2: " << player2;
+	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 23);
+	cout << "Step:" << x2 << " ";
+	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 23);
+	cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2 << " ";
 
+	SetColor(15, 5);
+	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
+	cout << "Player1: " << player1;
+	GotoXY(LEFT + 4 * BOARD_SIZE + 35, 21);
+	cout << "Step:" << x1 << " ";
+	GotoXY(LEFT + 4 * BOARD_SIZE + 50, 21);
+	cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1 << " ";
+	SetColor(15, 0);
 	ResetData(); // Khởi tạo dữ liệu gốc
 	DrawBoard(BOARD_SIZE, TOP, LEFT); // Vẽ màn hình
 }
@@ -254,19 +271,19 @@ int CheckTick(int pX, int pY) {
 int testBoard(int pX, int pY, int _size)
 {
 	// Xu ly hoa
-	bool check = true;
+	int dem = 0;
 	for (int i = 0; i < _size; i++)
 	{
 		for (int j = 0; j < _size; j++)
 		{
-			if (_A[i][j].c == 0)
+			if (_A[i][j].c != 0)
 			{
-				check = false;
-				break;
+				dem++;
+				
 			}
 		}
 	}
-	if (check) return 0;
+	if (dem >= 180) return 0;
 
 	//Xu ly thang/thua
 	int x = 0;

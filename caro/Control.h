@@ -48,7 +48,17 @@ void PlayPVP() {
 	vector<int> mapx;
 	vector<int> mapy;
 	UnNocursortype();
-	GotoXY(_X, _Y);
+	GotoXY(73, 29);
+	SetColor(15, 4);
+	cout << "Press T to turn ON/OFF sound!";
+	SetColor(15, 0);
+	sound_op2();
+
+	GotoXY(108, 29);
+	SetColor(15, 1);
+	if (sound) cout << "SOUND: ON ";
+	else cout << "SOUND: OFF";
+	SetColor(15, 0);
 	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 	cout << "Player2: " << player2;
@@ -77,19 +87,28 @@ void PlayPVP() {
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 'A' or _COMMAND == 75) {
 			MoveLeft();
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound)  PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		}
 		else if (_COMMAND == 'W' or _COMMAND == 72) {
 			MoveUp();
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		}
 		else if (_COMMAND == 'S' or _COMMAND == 80) {
 			MoveDown();
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		}
 		else if (_COMMAND == 'D' or _COMMAND == 77) {
 			MoveRight();
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		}
+		else if (_COMMAND == 'T') {
+			if (sound) sound = false;
+			else sound = true;
+			GotoXY(108, 29);
+			SetColor(15, 1);
+			if (sound) cout << "SOUND: ON ";
+			else cout << "SOUND: OFF";
+			SetColor(15, 0);
 		}
 		else if (_COMMAND == 27) {
 			system("cls");
@@ -100,7 +119,7 @@ void PlayPVP() {
 			break;
 		}
 		else if (_COMMAND == 13 or _COMMAND == 32) {
-			PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			switch (CheckBoard(_X, _Y)) {
 			case -1:
 				SetColor(15, 5);
@@ -196,6 +215,17 @@ void PlayPVP() {
 		}
 		else if (_COMMAND == 59) {
 			StartGame();
+			GotoXY(73, 29);
+			SetColor(15, 4);
+			cout << "Press T to turn ON/OFF sound!";
+			SetColor(15, 0);
+			sound_op2();
+
+			GotoXY(108, 29);
+			SetColor(15, 1);
+			if (sound) cout << "SOUND: ON ";
+			else cout << "SOUND: OFF";
+			SetColor(15, 0);
 			x1 = 0;
 			x2 = 0;
 			_TURN = turn;
@@ -240,7 +270,7 @@ void PlayPVP() {
 		if (testBoard(_X, _Y, BOARD_SIZE) == 1) {
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			owin();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -274,7 +304,7 @@ void PlayPVP() {
 		else if (testBoard(_X, _Y, BOARD_SIZE) == -1) {
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			xwin();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -307,7 +337,7 @@ void PlayPVP() {
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			draw();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -329,7 +359,18 @@ void PlayPVC() {
 	vector<int> mapx;
 	vector<int> mapy;
 	UnNocursortype();
-	GotoXY(_X, _Y);
+	GotoXY(73, 29);
+	SetColor(15, 4);
+	cout << "Press T to turn ON/OFF sound!";
+	SetColor(15, 0);
+	sound_op2();
+
+	GotoXY(108, 29);
+	SetColor(15, 1);
+	if (sound) cout << "SOUND: ON ";
+	else cout << "SOUND: OFF";
+	SetColor(15, 0);
+
 	bool turn = _TURN;
 	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
@@ -354,19 +395,28 @@ void PlayPVC() {
 			_COMMAND = toupper(_getch());
 			if (_COMMAND == 'A') {
 				MoveLeft();
-				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
 			else if (_COMMAND == 'W') {
 				MoveUp();
-				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
 			else if (_COMMAND == 'S') {
 				MoveDown();
-				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			}
 			else if (_COMMAND == 'D') {
 				MoveRight();
-				PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			}
+			else if (_COMMAND == 'T') {
+				if (sound) sound = false;
+				else sound = true;
+				SetColor(15, 1);
+				GotoXY(108, 29);
+				if (sound) cout << "SOUND: ON ";
+				else cout << "SOUND: OFF";
+				SetColor(15, 0);
 			}
 			else if (_COMMAND == 27) {
 				system("cls");
@@ -378,7 +428,7 @@ void PlayPVC() {
 			}
 			// Danh co
 			else if (_COMMAND == 13) {
-				PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				if(sound) PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
 				switch (CheckBoard(_X, _Y)) {
 				case -1:
 					SetColor(15, 5);
@@ -407,6 +457,17 @@ void PlayPVC() {
 			//NEW GAME
 			else if (_COMMAND == 59) {
 				StartGame();
+				GotoXY(73, 29);
+				SetColor(15, 4);
+				cout << "Press T to turn ON/OFF sound!";
+				SetColor(15, 0);
+				sound_op2();
+
+				GotoXY(108, 29);
+				SetColor(15, 1);
+				if (sound) cout << "SOUND: ON ";
+				else cout << "SOUND: OFF";
+				SetColor(15, 0);
 				x1 = 0;
 				x2 = 0;
 				_TURN = turn;
@@ -513,7 +574,7 @@ void PlayPVC() {
 			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			owin();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -548,7 +609,7 @@ void PlayPVC() {
 			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			xwin();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -580,7 +641,7 @@ void PlayPVC() {
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			draw();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -664,7 +725,7 @@ void PlayPVC() {
 			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			owin();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -699,7 +760,7 @@ void PlayPVC() {
 			turn = _TURN;
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			xwin();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -733,7 +794,7 @@ void PlayPVC() {
 		if (testBoard(_X, _Y, BOARD_SIZE) == 0) {
 			x1 = 0;
 			x2 = 0;
-			HighLight(65, 0, 60, 30, 15);
+			HighLight(65, 0, 60, 32, 15);
 			draw();
 			SetColor(15, 4);
 			GotoXY(85, 25); cout << "PRESS Y TO CONTINUE!";
@@ -767,23 +828,24 @@ void Newgame() {
 	while (1) {
 		
 		SetColor(15, 0);
+		box_newgame();
 		GotoXY(42, 29);
 		cout << "<----------Press Esc to return menu-------->";
 		SetColor(15, s[0]);
-		GotoXY(55, 16);
-		cout << "1.Play vs Player";
+		GotoXY(58, 17);
+		cout << "Play vs Player";
 
 		SetColor(15, s[1]);
-		GotoXY(55, 17);
-		cout << "2.Play vs Computer";
+		GotoXY(58, 23);
+		cout << "Play vs Computer";
 
 		getkey = toupper(_getch());
 		if (getkey == 'W' && count == 2) {
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			count--;
 		}
 		if (getkey == 'S' && count == 1) {
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			count++;
 		}
 		if (getkey == 27) {
@@ -804,21 +866,23 @@ void Newgame() {
 				cin >> player2;
 				Nocursortype();
 				while (1) {
+					SetColor(15, 0);
+					box_newgamepvp();
 					SetColor(15, ss[0]);
-					GotoXY(20, 16);
+					GotoXY(20, 17);
 					cout << "-Player1 go first (X)";
 
 					SetColor(15, ss[1]);
-					GotoXY(20, 17);
+					GotoXY(20, 21);
 					cout << "-player2 go first (O)";
 
 					getkey1 = toupper(_getch());
 					if (getkey1 == 'W' && count1 == 2) {
-						PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 						count1--;
 					}
 					if (getkey1 == 'S' && count1 == 1) {
-						PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 						count1++;
 					}
 					if (getkey1 == 13) {
@@ -856,21 +920,23 @@ void Newgame() {
 				player2 = "COMPUTER";
 				Nocursortype();
 				while (1) {
+					SetColor(15, 0);
+					box_newgamepvc();
 					SetColor(15, sss[0]);
-					GotoXY(20, 16);
+					GotoXY(20, 17);
 					cout << "-Player go first (X)";
 
 					SetColor(15, sss[1]);
-					GotoXY(20, 17);
+					GotoXY(20, 21);
 					cout << "-Computer go first (O)";
 
 					getkey2 = toupper(_getch());
 					if (getkey2 == 'W' && count2 == 2) {
-						PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 						count2--;
 					}
 					if (getkey2 == 'S' && count2 == 1) {
-						PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 						count2++;
 					}
 					if (getkey2 == 27) {
@@ -949,6 +1015,10 @@ void LoadGame() {
 		line++;
 	}
 	SaveName.close();
+	x1 = 0;
+	x2 = 0;
+	win1 = 0, lose1 = 0, draw1 = 0;
+	win2 = 0, lose2 = 0, draw2 = 0;
 	GotoXY(50, 20);
 	cout << "Enter the file name: ";
 	cin >> name;
@@ -999,36 +1069,51 @@ void Menu() {
 		menu_display();
 		Remote_Graphic();
 		XO_Graphic();
+		box_menu();
+		sound_op1();
+		GotoXY(83, 28);
+		cout << "Press W and S to move up and down";
+		GotoXY(89, 29);
+		cout << "Press Enter to chose";
+		GotoXY(86, 30);
 
-		GotoXY(58, 17);
+		cout << "Press T to turn ON/OFF sound";
+		GotoXY(17, 29);
+		if (sound)    cout << "SOUND: ON ";
+		else cout << "SOUND: OFF";
+		GotoXY(60, 17);
 		SetColor(15, set[0]);
-		cout << "1.New Game";
+		cout << "New Game";
 
-		GotoXY(58, 18);
+		GotoXY(62, 20);
 		SetColor(15, set[1]);
-		cout << "2.Help";
+		cout << "Help";
 
-		GotoXY(58, 19);
+		GotoXY(59, 23);
 		SetColor(15, set[2]);
-		cout << "3.Load game";
+		cout << "Load game";
 
-		GotoXY(58, 20);
+		GotoXY(62, 26);
 		SetColor(15, set[3]);
-		cout << "4.About";
+		cout << "About";
 
-		GotoXY(58, 21);
+		GotoXY(62, 29);
 		SetColor(15, set[4]);
-		cout << "5.Exit";
+		cout << "Exit";
 
 		key = toupper(_getch());
 
 		if ((key == 72 or key == 'W') and (counter >= 2 and counter <= 5)) {
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if(sound) if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			counter--;
 		}
 		if ((key == 80 or key == 'S') and (counter >= 1 and counter <= 4)) {
-			PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if (sound) if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			counter++;
+		}
+		if (key == 'T') {
+			if (sound)  sound = false;
+			else sound = true;
 		}
 		if (key == 13) {
 			if (counter == 1) {

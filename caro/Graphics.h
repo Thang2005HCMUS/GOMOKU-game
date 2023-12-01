@@ -626,3 +626,304 @@ void draw() {
 	HighLight(102, 5, 1, 1, 4);
 
 }
+
+
+
+
+
+void box_menu() {
+	GotoXY(54, 16);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 73) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 17; i <= 17; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(73, i); putchar(186);
+	}
+	GotoXY(54, 18);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 73) putchar(188);
+		else putchar(205);
+	}
+	// hop help
+	GotoXY(54, 19);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 73) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 20; i <= 20; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(73, i); putchar(186);
+	}
+	GotoXY(54, 21);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 73) putchar(188);
+		else putchar(205);
+	}
+	//
+	GotoXY(54, 22);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 73) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 23; i <= 23; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(73, i); putchar(186);
+	}
+	GotoXY(54, 24);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 73) putchar(188);
+		else putchar(205);
+	}
+	//
+
+	GotoXY(54, 28);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 73) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 29; i <= 29; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(73, i); putchar(186);
+	}
+	GotoXY(54, 30);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 73) putchar(188);
+		else putchar(205);
+	}
+	//
+
+	GotoXY(54, 25);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 73) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 26; i <= 26; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(73, i); putchar(186);
+	}
+	GotoXY(54, 27);
+	for (int i = 54; i <= 73; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 73) putchar(188);
+		else putchar(205);
+	}
+}
+
+void box_about() {
+	GotoXY(3,3);
+	for (int i = 3; i <= 55; i++)
+	{
+		if (i == 3) putchar(201);
+		else if (i == 55) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 4; i <= 15; i++)
+	{
+		GotoXY(3, i); putchar(186);
+		GotoXY(55, i); putchar(186);
+	}
+	GotoXY(3, 16);
+	for (int i = 3; i <= 55; i++)
+	{
+		if (i ==3) putchar(200);
+		else if (i == 55) putchar(188);
+		else putchar(205);
+	}
+}
+
+void box_newgame() {
+	GotoXY(54, 16);
+	for (int i = 54; i <= 75; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 75) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 17; i <= 17; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(75, i); putchar(186);
+	}
+	GotoXY(54, 18);
+	for (int i = 54; i <= 75; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 75) putchar(188);
+		else putchar(205);
+	}
+	// 
+	GotoXY(54, 22);
+	for (int i = 54; i <= 75; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 75) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 23; i <= 23; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(75, i); putchar(186);
+	}
+	GotoXY(54, 24);
+	for (int i = 54; i <= 75; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 75) putchar(188);
+		else putchar(205);
+	}
+}
+
+void box_newgamepvp() {
+	GotoXY(16, 16);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(201);
+		else if (i == 45) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 17; i <= 17; i++)
+	{
+		GotoXY(16, i); putchar(186);
+		GotoXY(45, i); putchar(186);
+	}
+	GotoXY(16, 18);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(200);
+		else if (i == 45) putchar(188);
+		else putchar(205);
+	}
+	// 
+	GotoXY(16, 20);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(201);
+		else if (i == 45) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 21; i <= 21; i++)
+	{
+		GotoXY(16, i); putchar(186);
+		GotoXY(45, i); putchar(186);
+	}
+	GotoXY(16, 22);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(200);
+		else if (i == 45) putchar(188);
+		else putchar(205);
+	}
+}
+
+void box_newgamepvc() {
+	GotoXY(16, 16);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(201);
+		else if (i == 45) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 17; i <= 17; i++)
+	{
+		GotoXY(16, i); putchar(186);
+		GotoXY(45, i); putchar(186);
+	}
+	GotoXY(16, 18);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(200);
+		else if (i == 45) putchar(188);
+		else putchar(205);
+	}
+	// 
+	GotoXY(16, 20);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(201);
+		else if (i == 45) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 21; i <= 21; i++)
+	{
+		GotoXY(16, i); putchar(186);
+		GotoXY(45, i); putchar(186);
+	}
+	GotoXY(16, 22);
+	for (int i = 16; i <= 45; i++)
+	{
+		if (i == 16) putchar(200);
+		else if (i == 45) putchar(188);
+		else putchar(205);
+	}
+}
+
+void sound_op1() {
+	GotoXY(15, 28);
+	for (int i = 15; i <= 28; i++)
+	{
+		if (i == 15) putchar(201);
+		else if (i == 28) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 29; i <= 29; i++)
+	{
+		GotoXY(15, i); putchar(186);
+		GotoXY(28, i); putchar(186);
+	}
+	GotoXY(15, 30);
+	for (int i = 15; i <= 28; i++)
+	{
+		if (i == 15) putchar(200);
+		else if (i == 28) putchar(188);
+		else putchar(205);
+	}
+}
+
+
+void sound_op2() {
+	GotoXY(105, 28);
+	for (int i = 105; i <= 119; i++)
+	{
+		if (i == 105) putchar(201);
+		else if (i == 119) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 29; i <= 29; i++)
+	{
+		GotoXY(105, i); putchar(186);
+		GotoXY(119, i); putchar(186);
+	}
+	GotoXY(105, 30);
+	for (int i = 105; i <= 119; i++)
+	{
+		if (i == 105) putchar(200);
+		else if (i == 119) putchar(188);
+		else putchar(205);
+	}
+}

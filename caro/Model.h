@@ -16,6 +16,8 @@ void SavePVC(); //luu game che do nguoi voi may
 
 void SavePVP() {
 	GotoXY(78, 5);
+	cout << "                                         ";
+	GotoXY(78, 5);
 	cout << "Enter a file name to save: ";
 	cin >> filename;
 	GotoXY(78, 5);
@@ -36,6 +38,12 @@ void SavePVP() {
 		}
 	}
 	if (kt == 0) {
+		GotoXY(75, 7);
+		cout << "                                                 ";
+		GotoXY(89, 5);
+		SetColor(15, 4);
+		cout << "Saved successfully!";
+		SetColor(15, 0);
 		ofstream SaveGame(filename);
 		SaveGame << _TURN;
 		SaveGame << endl;
@@ -60,6 +68,8 @@ void SavePVP() {
 
 void SavePVC() {
 	GotoXY(78, 5);
+	cout << "                                          ";
+	GotoXY(78, 5);
 	cout << "Enter a file name to save: ";
 	cin >> filename;
 	GotoXY(78, 5);
@@ -80,6 +90,12 @@ void SavePVC() {
 		}
 	}
 	if (kt == 0) {
+		GotoXY(75, 7);
+		cout << "                                                 ";
+		GotoXY(89, 5);
+		SetColor(15, 4);
+		cout <<"Saved successfully!";
+		SetColor(15, 0);
 		ofstream SaveGame(filename);
 		SaveGame << _TURN;
 		SaveGame << endl;

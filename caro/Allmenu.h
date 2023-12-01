@@ -63,6 +63,7 @@ void Help() {
 }
 
 void About() {
+	box_about();
 	GotoXY(10, 4);
 	cout << "GROUP 10";
 	GotoXY(10, 6);
