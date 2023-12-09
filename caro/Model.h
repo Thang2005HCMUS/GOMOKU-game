@@ -180,8 +180,25 @@ void SaveFileName()
 {
 	fstream SaveName;
 	SaveName.open("filename.txt",ios::app);
-	SaveName <<endl <<filename;
+	SaveName <<endl<<filename;
 	SaveName.close();
 }
 
+void get_info() {
+	ifstream get;
+	get.open(filename);
+	get >> _TURN;
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 15; j++) {
+			get >> _A[i][j].c;
+		}
+	}
+	get >> player1;
+	get >> x1; get >> win1; get >> lose1; get >> draw1;
+	get >> player2;
+	get >> x2; get >> win2; get >> lose2; get >> draw2;
 
+	get >> option;
+
+	get.close();
+}

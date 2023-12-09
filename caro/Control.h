@@ -4,8 +4,10 @@
 #include<conio.h>
 #include"Allmenu.h"
 #include<vector>
+#include <cstdio>
 #include"Model.h"
 #include"Graphics.h"
+
 
 using namespace std;
 void Menu();// in ra menu tren ma hinh
@@ -372,6 +374,10 @@ void PlayPVC() {
 	SetColor(15, 0);
 
 	bool turn = _TURN;
+	GotoXY(95, 3);
+	SetColor(15, 9);
+	cout << "Play PVC";
+	SetColor(15, 0);
 	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
 	cout << "Player2: " << player2;
@@ -457,6 +463,10 @@ void PlayPVC() {
 			//NEW GAME
 			else if (_COMMAND == 59) {
 				StartGame();
+				GotoXY(95, 3);
+				SetColor(15, 9);
+				cout << "Play PVC";
+				SetColor(15, 0);
 				GotoXY(73, 29);
 				SetColor(15, 4);
 				cout << "Press T to turn ON/OFF sound!";
@@ -549,7 +559,7 @@ void PlayPVC() {
 						}
 					}
 				}
-				if (x2 >= 1) x2--;
+				if (x2 > 1) x2--;
 				SetColor(15, 5);
 				GotoXY(LEFT + 4 * BOARD_SIZE + 13, 21);
 				cout << "Player1: " << player1;
@@ -913,7 +923,7 @@ void Newgame() {
 				system("cls");
 				Remote_Graphic();
 				GotoXY(20, 10);
-				SetColor(15,0);
+				SetColor(15, 0);
 				UnNocursortype();
 				cout << "Player name: ";
 				cin >> player1;
@@ -932,11 +942,11 @@ void Newgame() {
 
 					getkey2 = toupper(_getch());
 					if (getkey2 == 'W' && count2 == 2) {
-						if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						if (sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 						count2--;
 					}
 					if (getkey2 == 'S' && count2 == 1) {
-						if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						if (sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 						count2++;
 					}
 					if (getkey2 == 27) {
@@ -981,78 +991,179 @@ void Newgame() {
 }
 
 void LoadGame() {
-	UnNocursortype();
+	vector<string> map;
+	int play=0;
+	Nocursortype();
 	system("cls");
 	Remote_Graphic();
 	listgame_Graphic();
-	string name;
-	int line = 0;
+	ifstream FileSave;
+	FileSave.open("filename.txt");
+	string tmp;
+	while (FileSave >> tmp) {
+		map.push_back(tmp);
+	}
+	box_load();
+	int count = 1, op = 1;
+	int color[50] = { 0 };
+	color[0] = 4;
+	int ops[3] = { 4,0,0 };
 	GotoXY(50, 5);
 	cout << "LIST FILE NAME:";
-
-	ifstream SaveName("filename.txt");
-	string read;
-	while (getline(SaveName, read)) {
-		ifstream Option;
-		Option.open(read);
-		Option >> _TURN;
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			for (int j = 0; j < BOARD_SIZE; j++) {
-				Option >> _A[i][j].c;
-			}
+	GotoXY(82, 28);
+	cout << "<-------Perss Esc to return menu------->";
+	while (1) {
+		for (int i = 0; i < 12; i++) {
+			GotoXY(50, 6 + i);
+			cout << "          ";
 		}
-		Option >> player1;
-		Option >> x1; Option >> win1; Option >> lose1; Option >> draw1;
-		Option >> player2;
-		Option >> x2; Option >> win2; Option >> lose2; Option >> draw2;
-
-		Option >> option;
-		Option.close();
-		GotoXY(50, 6 + line);
-		cout << "-" << read;
-		GotoXY(73, 6 + line);
-		cout << "(" << option << ")";
-		line++;
-	}
-	SaveName.close();
-	x1 = 0;
-	x2 = 0;
-	win1 = 0, lose1 = 0, draw1 = 0;
-	win2 = 0, lose2 = 0, draw2 = 0;
-	GotoXY(50, 20);
-	cout << "Enter the file name: ";
-	cin >> name;
-	ifstream SaveName1("filename.txt");
-	string read1;
-	int countall = 0, callfail = 0;
-	while (getline(SaveName1, read1)) {
-		countall++;
-		if (read1 == name) {
-			filename = name;
+		for (int i = 0; i < map.size(); i++) {
+			GotoXY(50, 6 + i + 1);
+			SetColor(15, color[i]);
+			cout << map[i];
+		}
+		_COMMAND = toupper(_getch());
+		if (_COMMAND == 'W' and (count >= 2 and count <= map.size()+1)) {
+			count--;
+			if (sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		}
+		if (_COMMAND == 'S' and (count >= 1 and count < map.size())) {
+			count++;
+			if (sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		}
+		if (_COMMAND == 27) {
 			system("cls");
-			Load();
-			_X = _A[0][0].x; _Y = _A[0][0].y;
-			if (option == "PVP") {
-				PlayPVP();
-				system("cls");
-				break;
+			break;
+		}
+		for (int i = 0; i < map.size(); i++) {
+			color[i] = 0;
+		}
+		for (int i = 0; i < map.size(); i++) {
+			if (count == i + 1) {
+				filename = map[i];
+				SetColor(15, 0);
+				get_info();
+				GotoXY(96, 3);
+				cout << "<<<INFORMATION>>>";
+				GotoXY(90, 4);
+				cout << "                                   ";
+				GotoXY(90, 4);
+				cout << "Player1: " << player1;
+				GotoXY(90, 5);
+				cout << "W/L/D:" << win1 << "/" << lose1 << "/" << draw1 << "         Sept:"<<x1<<" ";
+				GotoXY(90, 6);
+				cout << "                                    ";
+				GotoXY(90, 6);
+				cout << "Player2: " << player2;
+				GotoXY(90, 7);
+				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2 << "         Step:" <<x2<<" ";
+				GotoXY(98, 8);
+				cout << "Game mode:" << option;
+				color[i] = 4;
 			}
-			else if (option == "PVC") {
-				PlayPVC();
-				system("cls");
-				break;
+
+		}
+		if (_COMMAND == 13) {
+			for (int i = 0; i < map.size(); i++) {
+				if (count == i + 1) {
+					filename = map[i];
+					
+					while (1) {
+						SetColor(15, 0);
+						box_option();
+						SetColor(15, ops[0]);
+						GotoXY(58, 23);
+						cout << "Play";
+						SetColor(15, ops[1]);
+						GotoXY(57, 26);
+						cout << "Delete";
+						SetColor(15, ops[2]);
+						GotoXY(58, 29);
+						cout << "Back";
+						_COMMAND = toupper(_getch());
+						if (_COMMAND == 'W' and (op > 1 and op <= 3)) {
+							op--;
+							if (sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						}
+						if (_COMMAND == 'S' and (op >= 1 and op < 3)){
+							op++;
+							if (sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
+						}
+						if (_COMMAND == 13) {
+							if (op == 1) {
+								system("cls");
+								filename = map[i];
+								get_info();
+								Load();
+								if (option == "PVP") PlayPVP();
+								else if (option == "PVC") PlayPVC();
+								play = 1;
+								break;
+							}
+							if (op == 2) {
+								filename = map[i];
+								char namedelete[30] = "";
+								for (int j = 0; j < map[i].size(); j++) {
+									namedelete[j] = map[i][j];
+								}
+								remove(namedelete);
+								map.erase(map.begin() + i);
+								play = -1;
+								ofstream refile;
+								refile.open("filename.txt", ios::trunc);
+								for (int i = 0; i < map.size(); i++) {
+									refile << map[i] << endl;
+								}
+								refile.close();
+								for (int j = 0; j < 9; j++) {
+									GotoXY(45,22+j);
+									cout << "                            ";
+								}
+								GotoXY(58, 23);
+								cout << "      ";
+								GotoXY(57, 26);
+								cout << "       ";
+								GotoXY(58, 29);
+								cout << "     ";
+								break;
+							}
+							if (op == 3) {
+								for (int j = 0; j < 9; j++) {
+									GotoXY(45, 22 + j);
+									cout << "                            ";
+								}
+								GotoXY(58, 23);
+								cout << "      ";
+								GotoXY(57, 26);
+								cout << "       ";
+								GotoXY(58, 29);
+								cout << "     ";
+								break;
+							}
+							
+						}
+						ops[0] = 0;
+						ops[1] = 0;
+						ops[2] = 0;
+						if (op == 1) {
+							ops[0] = 4;
+						}
+						if (op == 2) {
+							ops[1] = 4;
+						}
+						if (op == 3) {
+							ops[2] = 4;
+						}
+					}
+				}
 			}
 		}
-		else callfail++;
+		if (play == 1) {
+			system("cls");
+			break;
+		}
+
 	}
-	if (callfail == countall) {
-		system("cls");
-		GotoXY(55, 17);
-		cout << "FILE NOT EXIT!";
-		Sleep(2000);
-		system("cls");
-	}
-	SaveName1.close();
 }
 
 
@@ -1071,6 +1182,7 @@ void Menu() {
 		XO_Graphic();
 		box_menu();
 		sound_op1();
+		SetColor(15, 1);
 		GotoXY(83, 28);
 		cout << "Press W and S to move up and down";
 		GotoXY(89, 29);
@@ -1078,6 +1190,7 @@ void Menu() {
 		GotoXY(86, 30);
 
 		cout << "Press T to turn ON/OFF sound";
+		SetColor(15, 0);
 		GotoXY(17, 29);
 		if (sound)    cout << "SOUND: ON ";
 		else cout << "SOUND: OFF";

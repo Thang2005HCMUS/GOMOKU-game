@@ -927,3 +927,92 @@ void sound_op2() {
 		else putchar(205);
 	}
 }
+
+
+void box_load() {
+	GotoXY(48, 4);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(201);
+		else if (i == 72) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 5; i <= 19; i++)
+	{
+		GotoXY(48, i); putchar(186);
+		GotoXY(72, i); putchar(186);
+	}
+	GotoXY(48, 20);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(200);
+		else if (i == 72) putchar(188);
+		else putchar(205);
+	}
+}
+
+
+void box_option() {
+	//
+	GotoXY(48, 22);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(201);
+		else if (i == 72) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 23; i <= 23; i++)
+	{
+		GotoXY(48, i); putchar(186);
+		GotoXY(72, i); putchar(186);
+	}
+	GotoXY(48, 24);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(200);
+		else if (i == 72) putchar(188);
+		else putchar(205);
+	}
+	//
+
+	GotoXY(48, 28);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(201);
+		else if (i == 72) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 29; i <= 29; i++)
+	{
+		GotoXY(48, i); putchar(186);
+		GotoXY(72, i); putchar(186);
+	}
+	GotoXY(48, 30);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(200);
+		else if (i == 72) putchar(188);
+		else putchar(205);
+	}
+	//
+
+	GotoXY(48, 25);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(201);
+		else if (i == 72) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 26; i <= 26; i++)
+	{
+		GotoXY(48, i); putchar(186);
+		GotoXY(72, i); putchar(186);
+	}
+	GotoXY(48, 27);
+	for (int i = 48; i <= 72; i++)
+	{
+		if (i == 48) putchar(200);
+		else if (i == 72) putchar(188);
+		else putchar(205);
+	}
+}
