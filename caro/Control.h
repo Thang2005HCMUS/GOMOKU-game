@@ -375,9 +375,12 @@ void PlayPVC() {
 	SetColor(15, 0);
 
 	bool turn = _TURN;
-	GotoXY(95, 3);
+	GotoXY(92, 3);
 	SetColor(15, 9);
-	cout << "Play PVC";
+	if (option == "PVC(easy)")
+		cout << "Play PVC(easy)";
+	else if (option == "PVC(hard)")
+		cout << "Play PVC(hard)";
 	SetColor(15, 0);
 	SetColor(15, 2);
 	GotoXY(LEFT + 4 * BOARD_SIZE + 13, 23);
@@ -667,6 +670,7 @@ void PlayPVC() {
 			}
 			else break;
 		}
+		//may dannh
 		if (!_TURN) {
 			
 			int dem = 0;
@@ -710,8 +714,14 @@ void PlayPVC() {
 				_TURN = true;
 			}
 			else {
-				_X = Tim_Kiem_NuocDi().x;
-				_Y = Tim_Kiem_NuocDi().y;
+				if (option == "PVC(hard)") {
+					_X = Tim_Kiem_NuocDi_hard().x;
+					_Y = Tim_Kiem_NuocDi_hard().y;
+				}
+				else if (option == "PVC(easy)") {
+					_X = Tim_Kiem_NuocDi_easy().x;
+					_Y = Tim_Kiem_NuocDi_easy().y;
+				}
 				CheckBoard(_X, _Y);
 				GotoXY(_X, _Y);
 				SetColor(15, 2);
@@ -834,8 +844,8 @@ void Newgame() {
 	int count = 1;
 	int count1 = 1;
 	int count2 = 1;
-	int s[2] = { 4,0 };
-	int ss[2] = { 4,0 };
+	int s[3] = { 4,0,0 };
+	int ss[2] = { 4,0};
 	int sss[2] = { 4,0 };
 	while (1) {
 		
@@ -844,19 +854,23 @@ void Newgame() {
 		GotoXY(42, 29);
 		cout << "<----------Press Esc to return menu-------->";
 		SetColor(15, s[0]);
-		GotoXY(58, 17);
+		GotoXY(59, 17);
 		cout << "Play vs Player";
-
+		
 		SetColor(15, s[1]);
-		GotoXY(57, 23);
-		cout << "Play vs Computer";
+		GotoXY(55, 21);
+		cout << "Play vs Computer(easy)";
+
+		SetColor(15, s[2]);
+		GotoXY(55, 25);
+		cout << "Play vs Computer(hard)";
 
 		getkey = toupper(_getch());
-		if (getkey == 'W' && count == 2) {
+		if (getkey == 'W' && count >=2 and count<=3) {
 			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			count--;
 		}
-		if (getkey == 'S' && count == 1) {
+		if (getkey == 'S' && count >= 1 and count<=2) {
 			if(sound) PlaySound(TEXT("move.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			count++;
 		}
@@ -867,6 +881,7 @@ void Newgame() {
 		if (getkey == 13) {
 			if (sound) PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			if (count == 1) {
+				option = "PVP";
 				system("cls");
 				Remote_Graphic();
 				GotoXY(20, 10);
@@ -927,7 +942,9 @@ void Newgame() {
 				system("cls");
 				break;
 			}
-			if (count == 2) {
+			if (count == 2 or count==3) {
+				if (count == 2) option = "PVC(easy)";
+				else if (count == 3) option = "PVC(hard)";
 				system("cls");
 				Remote_Graphic();
 				GotoXY(20, 10);
@@ -996,11 +1013,15 @@ void Newgame() {
 		}
 		s[0] = 0;
 		s[1] = 0;
+		s[2] = 0;
 		if (count == 1) {
 			s[0] = 4;
 		}
 		if (count == 2) {
 			s[1] = 4;
+		}
+		if (count == 3) {
+			s[2] = 4;
 		}
 	}
 }
@@ -1037,6 +1058,13 @@ void LoadGame() {
 			SetColor(15, color[i]);
 			cout << map[i];
 		}
+		
+		SetColor(15, 0);
+		sound_op3();
+		GotoXY(21, 4);
+		if (sound)    cout << "SOUND: ON ";
+		else cout << "SOUND: OFF";
+		GotoXY(60, 17);
 		for (int i = 0; i < map.size(); i++) {
 			if (count == i + 1) {
 				filename = map[i];
@@ -1056,8 +1084,8 @@ void LoadGame() {
 				cout << "Player2: " << player2;
 				GotoXY(90, 7);
 				cout << "W/L/D:" << win2 << "/" << lose2 << "/" << draw2 << "         Step:" << x2 << " ";
-				GotoXY(98, 8);
-				cout << "Game mode:" << option;
+				GotoXY(95, 8);
+				cout << "Game mode:" << option<<"      ";
 			}
 		}
 		_COMMAND = toupper(_getch());
@@ -1072,6 +1100,11 @@ void LoadGame() {
 		if (_COMMAND == 27) {
 			system("cls");
 			break;
+		}
+		if (_COMMAND == 'T') {
+			if (sound) PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			if (sound)  sound = false;
+			else sound = true;
 		}
 		for (int i = 0; i < map.size(); i++) {
 			color[i] = 0;
@@ -1115,7 +1148,7 @@ void LoadGame() {
 								get_info();
 								Load();
 								if (option == "PVP") PlayPVP();
-								else if (option == "PVC") PlayPVC();
+								else if (option == "PVC(easy)" or option == "PVC(hard)") PlayPVC();
 								play = 1;
 								break;
 							}

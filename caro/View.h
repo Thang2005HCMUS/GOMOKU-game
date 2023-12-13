@@ -10,8 +10,11 @@ using namespace std;
 #define LEFT 1									 
 #define TOP 1	
 
-long long attack[7] = { 0, 9, 54, 162, 1458, 13112, 118008 };// mang diem tan cong
-long long defense[7] = { 0, 3, 27, 99, 729, 6561, 59049 };//mang diem phong ngu
+const  long Defend_Score1[7] = { 0, 8, 512, 32768, 2097152, 134217728 };
+const  long Attack_Score1[7] = { 0, 64, 4096, 262144, 16777216, 1073741824 };
+
+const  long Defend_Score2[7] = { 1, 2, 3, 1, 1, 1 };
+const  long Attack_Score2[7] = { 2, 3, 4, 5, 6, 7 };
 
 
 struct _POINT {
@@ -48,7 +51,7 @@ int CheckTick(int, int);  //ham kiem tra gia tri o co
 int testBoard(int, int, int);  //kiem tra thang thua hoa
 void DrawLineWin(int, int); // ham hien thi chien thang
 
-long SoDiemTanCong_DuyetNgang(long, long); //tinh diem tan cong ngang
+long SoDiemTanCong_DuyetNgang(long, long,const long[],const long[]); //tinh diem tan cong ngang
 long SoDiemTanCong_DuyetDoc(long, long);//tinh diem tan cong doc
 long SoDiemTanCong_DuyetCheo1(long, long); //tinh diem tan cong cheo phai sang trai
 long SoDiemTanCong_DuyetCheo2(long, long);//tinh diem tan cong trai sang phai
@@ -639,7 +642,7 @@ void DrawLineWin(int pX, int pY)
 		}
 	}
 }
-long SoDiemTanCong_DuyetNgang(long Dong, long Cot)
+long SoDiemTanCong_DuyetNgang(long Dong, long Cot,const long defense[], const long attack[])
 {
 	long iScoreTempNgang = 0;
 	long iScoreAttack = 0;
@@ -728,7 +731,7 @@ long SoDiemTanCong_DuyetNgang(long Dong, long Cot)
 		iScoreTempNgang += defense[iSoQuanDich2];
 	return iScoreTempNgang;
 }
-long SoDiemTanCong_DuyetDoc(long Dong, long Cot)
+long SoDiemTanCong_DuyetDoc(long Dong, long Cot, const long defense[], const long attack[])
 {
 	long iScoreTempDoc = 0;
 	long iScoreAttack = 0;
@@ -822,7 +825,7 @@ long SoDiemTanCong_DuyetDoc(long Dong, long Cot)
 	return iScoreTempDoc;
 }
 
-long SoDiemTanCong_DuyetCheo1(long Dong, long Cot)
+long SoDiemTanCong_DuyetCheo1(long Dong, long Cot, const long defense[], const long attack[])
 {
 	long iScoreTempCheoNguoc = 0;
 	long iScoreAttack = 0;
@@ -913,7 +916,7 @@ long SoDiemTanCong_DuyetCheo1(long Dong, long Cot)
 		iScoreTempCheoNguoc += defense[iSoQuanDich2];
 	return iScoreTempCheoNguoc;
 }
-long SoDiemTanCong_DuyetCheo2(long Dong, long Cot)
+long SoDiemTanCong_DuyetCheo2(long Dong, long Cot, const long defense[], const long attack[])
 {
 	long iScoreTempCheoXuoi = 0;
 	long iScoreAttack = 0;
@@ -1003,7 +1006,7 @@ long SoDiemTanCong_DuyetCheo2(long Dong, long Cot)
 	return iScoreTempCheoXuoi;
 }
 
-long SoDiemPhongThu_DuyetDoc(long Dong, long Cot)
+long SoDiemPhongThu_DuyetDoc(long Dong, long Cot, const long defense[], const long attack[])
 {
 	long iScoreTempDoc = 0;
 	long iScoreDefend = 0;
@@ -1083,7 +1086,7 @@ long SoDiemPhongThu_DuyetDoc(long Dong, long Cot)
 	return iScoreTempDoc;
 }
 
-long SoDiemPhongThu_DuyetNgang(long Dong, long Cot)
+long SoDiemPhongThu_DuyetNgang(long Dong, long Cot, const long defense[], const long attack[])
 {
 	long iScoreTempNgang = 0;
 	long iScoreDefend = 0;
@@ -1162,7 +1165,7 @@ long SoDiemPhongThu_DuyetNgang(long Dong, long Cot)
 	return iScoreTempNgang;
 }
 
-long SoDiemPhongThu_DuyetCheo1(long Dong, long Cot)
+long SoDiemPhongThu_DuyetCheo1(long Dong, long Cot, const long defense[], const long attack[])
 {
 
 	long iScoreTempCheoNguoc = 0;
@@ -1243,7 +1246,7 @@ long SoDiemPhongThu_DuyetCheo1(long Dong, long Cot)
 	return iScoreTempCheoNguoc;
 }
 
-long SoDiemPhongThu_DuyetCheo2(long Dong, long Cot)
+long SoDiemPhongThu_DuyetCheo2(long Dong, long Cot, const long defense[], const long attack[])
 {
 	long iScoreTempCheoXuoi = 0;
 	long iScoreDefend = 0;
@@ -1323,7 +1326,7 @@ long SoDiemPhongThu_DuyetCheo2(long Dong, long Cot)
 	return iScoreTempCheoXuoi;
 }
 
-_POINT Tim_Kiem_NuocDi()
+_POINT Tim_Kiem_NuocDi_hard()
 {
 	_POINT Oco;
 	int dong = 0, cot = 0;
@@ -1336,15 +1339,15 @@ _POINT Tim_Kiem_NuocDi()
 			long DiemPhongThu = 0;
 			if (_A[i][j].c == 0)
 			{
-				DiemTanCong += SoDiemTanCong_DuyetDoc(i, j);
-				DiemTanCong += SoDiemTanCong_DuyetNgang(i, j);
-				DiemTanCong += SoDiemTanCong_DuyetCheo1(i, j);
-				DiemTanCong += SoDiemTanCong_DuyetCheo2(i, j);
+				DiemTanCong += SoDiemTanCong_DuyetDoc(i, j, Defend_Score1, Attack_Score1);
+				DiemTanCong += SoDiemTanCong_DuyetNgang(i, j, Defend_Score1, Attack_Score1);
+				DiemTanCong += SoDiemTanCong_DuyetCheo1(i, j, Defend_Score1, Attack_Score1);
+				DiemTanCong += SoDiemTanCong_DuyetCheo2(i, j, Defend_Score1, Attack_Score1);
 				//////////////////////////////////////////////
-				DiemPhongThu += SoDiemPhongThu_DuyetDoc(i, j);
-				DiemPhongThu += SoDiemPhongThu_DuyetNgang(i, j);
-				DiemPhongThu += SoDiemPhongThu_DuyetCheo1(i, j);
-				DiemPhongThu += SoDiemPhongThu_DuyetCheo2(i, j);
+				DiemPhongThu += SoDiemPhongThu_DuyetDoc(i, j, Defend_Score1, Attack_Score1);
+				DiemPhongThu += SoDiemPhongThu_DuyetNgang(i, j, Defend_Score1, Attack_Score1);
+				DiemPhongThu += SoDiemPhongThu_DuyetCheo1(i, j, Defend_Score1, Attack_Score1);
+				DiemPhongThu += SoDiemPhongThu_DuyetCheo2(i, j, Defend_Score1, Attack_Score1);
 
 				if (DiemTanCong > DiemPhongThu)
 				{
@@ -1370,6 +1373,57 @@ _POINT Tim_Kiem_NuocDi()
 	Oco.x=(cot * 4 + 2+LEFT);
 	Oco.y=(dong * 2 + 1+TOP);
 	
+	return Oco;
+}
+
+
+_POINT Tim_Kiem_NuocDi_easy()
+{
+	_POINT Oco;
+	int dong = 0, cot = 0;
+	long Diem = 0;
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			long DiemTanCong = 0;
+			long DiemPhongThu = 0;
+			if (_A[i][j].c == 0)
+			{
+				DiemTanCong += SoDiemTanCong_DuyetDoc(i, j, Defend_Score2, Attack_Score2);
+				DiemTanCong += SoDiemTanCong_DuyetNgang(i, j, Defend_Score2, Attack_Score2);
+				DiemTanCong += SoDiemTanCong_DuyetCheo1(i, j, Defend_Score2, Attack_Score2);
+				DiemTanCong += SoDiemTanCong_DuyetCheo2(i, j, Defend_Score2, Attack_Score2);
+				//////////////////////////////////////////////
+				DiemPhongThu += SoDiemPhongThu_DuyetDoc(i, j, Defend_Score2, Attack_Score2);
+				DiemPhongThu += SoDiemPhongThu_DuyetNgang(i, j, Defend_Score2, Attack_Score2);
+				DiemPhongThu += SoDiemPhongThu_DuyetCheo1(i, j, Defend_Score2, Attack_Score2);
+				DiemPhongThu += SoDiemPhongThu_DuyetCheo2(i, j, Defend_Score2, Attack_Score2);
+
+				if (DiemTanCong > DiemPhongThu)
+				{
+					if (Diem < DiemTanCong)
+					{
+						Diem = DiemTanCong;
+						dong = i;
+						cot = j;
+					}
+				}
+				else
+				{
+					if (Diem < DiemPhongThu)
+					{
+						Diem = DiemPhongThu;
+						dong = i;
+						cot = j;
+					}
+				}
+			}
+		}
+	}
+	Oco.x = (cot * 4 + 2 + LEFT);
+	Oco.y = (dong * 2 + 1 + TOP);
+
 	return Oco;
 }
 

@@ -759,42 +759,62 @@ void box_about() {
 
 void box_newgame() {
 	GotoXY(54, 16);
-	for (int i = 54; i <= 75; i++)
+	for (int i = 54; i <= 77; i++)
 	{
 		if (i == 54) putchar(201);
-		else if (i == 75) putchar(187);
+		else if (i == 77) putchar(187);
 		else putchar(205);
 	}
 	for (int i = 17; i <= 17; i++)
 	{
 		GotoXY(54, i); putchar(186);
-		GotoXY(75, i); putchar(186);
+		GotoXY(77, i); putchar(186);
 	}
 	GotoXY(54, 18);
-	for (int i = 54; i <= 75; i++)
+	for (int i = 54; i <= 77; i++)
 	{
 		if (i == 54) putchar(200);
-		else if (i == 75) putchar(188);
+		else if (i == 77) putchar(188);
 		else putchar(205);
 	}
 	// 
-	GotoXY(54, 22);
-	for (int i = 54; i <= 75; i++)
+	GotoXY(54, 24);
+	for (int i = 54; i <= 77; i++)
 	{
 		if (i == 54) putchar(201);
-		else if (i == 75) putchar(187);
+		else if (i == 77) putchar(187);
 		else putchar(205);
 	}
-	for (int i = 23; i <= 23; i++)
+	for (int i = 25; i <= 25; i++)
 	{
 		GotoXY(54, i); putchar(186);
-		GotoXY(75, i); putchar(186);
+		GotoXY(77, i); putchar(186);
 	}
-	GotoXY(54, 24);
-	for (int i = 54; i <= 75; i++)
+	GotoXY(54, 26);
+	for (int i = 54; i <= 77; i++)
 	{
 		if (i == 54) putchar(200);
-		else if (i == 75) putchar(188);
+		else if (i == 77) putchar(188);
+		else putchar(205);
+	}
+	//
+	GotoXY(54, 20);
+	for (int i = 54; i <= 77; i++)
+	{
+		if (i == 54) putchar(201);
+		else if (i == 77) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 21; i <= 21; i++)
+	{
+		GotoXY(54, i); putchar(186);
+		GotoXY(77, i); putchar(186);
+	}
+	GotoXY(54, 22);
+	for (int i = 54; i <= 77; i++)
+	{
+		if (i == 54) putchar(200);
+		else if (i == 77) putchar(188);
 		else putchar(205);
 	}
 }
@@ -924,6 +944,28 @@ void sound_op2() {
 	{
 		if (i == 105) putchar(200);
 		else if (i == 119) putchar(188);
+		else putchar(205);
+	}
+}
+
+void sound_op3() {
+	GotoXY(18, 3);
+	for (int i = 18; i <= 32; i++)
+	{
+		if (i == 18) putchar(201);
+		else if (i == 32) putchar(187);
+		else putchar(205);
+	}
+	for (int i = 4; i <= 4; i++)
+	{
+		GotoXY(18, i); putchar(186);
+		GotoXY(32, i); putchar(186);
+	}
+	GotoXY(18, 5);
+	for (int i = 18; i <= 32; i++)
+	{
+		if (i == 18) putchar(200);
+		else if (i == 32) putchar(188);
 		else putchar(205);
 	}
 }

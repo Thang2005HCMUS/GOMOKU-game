@@ -110,7 +110,7 @@ void SavePVC() {
 		SaveGame << player2 << endl;
 
 		SaveGame << x2 << " " << win2 << " " << lose2 << " " << draw2 << endl;
-		SaveGame << "PVC";
+		SaveGame << option;
 		SaveGame.close();
 		SaveFileName();
 	}
