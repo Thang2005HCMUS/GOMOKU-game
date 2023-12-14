@@ -36,6 +36,14 @@ void SavePVP() {
 			GotoXY(75, 7);
 			cout << "Filename already exists, press F2 to try again! ";
 		}
+		if (read.length() > 15)
+		{
+			kt = 1;
+			GotoXY(78, 5);
+			cout << "                                           ";
+			GotoXY(75, 7);
+			cout << "Max length of Filename is 15, press F2 to try again! ";
+		}
 	}
 	if (kt == 0) {
 		GotoXY(75, 7);
